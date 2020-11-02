@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pisite-deployment
+  name: home-deployment
   labels:
     version: "1.0"
-    app: pisite-deployment
+    app: home-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pisite-deployment
+      app: home-deployment
   template:
     metadata:
       labels:
-        app: pisite-deployment
+        app: home-deployment
     spec:
       containers:
-      - name: pisite
-        image: jamesmthorne/pi-site:latest
+      - name: home
+        image: jamesmthorne/home:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000

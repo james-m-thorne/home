@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pisite-service
+  name: home-service
 spec:
   type: LoadBalancer
   ports:
   - protocol: TCP
     port: 8080
-    targetPort: 80
+    targetPort: 3000
   selector:
-    app: pisite-deployment
+    app: home-deployment

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: pisite-ingress
+  name: home-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
@@ -10,5 +10,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: pisite-service
+          serviceName: home-service
           servicePort: 8080
