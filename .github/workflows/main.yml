@@ -37,9 +37,9 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/arm/v6,linux/arm/v7
+          platforms: linux/arm/v7
           push: true
-          tags: jamesmthorne/home:${{ github.sha }}
+          tags: jamesmthorne/home:latest
 
       - name: Update Kubernetes YAML
         uses: steebchen/kubectl@master
@@ -48,12 +48,12 @@ jobs:
         with:
           args: --insecure-skip-tls-verify apply -f ./kube
     
-      - name: Deploy to cluster
+      - name: Restart deployment to cluster
         uses: steebchen/kubectl@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: --insecure-skip-tls-verify set image --record deployment/home-deployment home=jamesmthorne/home:${{ github.sha }}
+          args: --insecure-skip-tls-verify rollout restart deployment home-deployment
 
       - name: Verify deployment
         uses: steebchen/kubectl@master
@@ -61,4 +61,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
           KUBECTL_VERSION: "1.18"
         with:
-          args: --insecure-skip-tls-verify rollout status deployment/home-deployment
+          args: --insecure-skip-tls-verify rollout status deployment home-deployment
