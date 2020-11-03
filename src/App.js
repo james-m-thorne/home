@@ -2,7 +2,7 @@ function App() {
   return (
     <div>
       <header>
-        Hello World again
+        Hello World :)
       </header>
     </div>
   );
