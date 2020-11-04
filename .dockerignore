@@ -1,3 +1,4 @@
-node_modules
-.gibhub
-.kube
+node_modules/
+.gibhub/
+.kube/
+README.md
