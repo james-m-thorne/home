@@ -2,7 +2,7 @@ function App() {
   return (
     <div>
       <header>
-        Hello World :)
+        Hello World from NGINX :)
       </header>
     </div>
   );
