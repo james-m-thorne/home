@@ -39,7 +39,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm/v7
           push: true
-          tags: jamesmthorne/home:${{ github.sha }}
+          tags: jamesmthorne/home:latest
 
       - name: Update Kubernetes YAML
         uses: steebchen/kubectl@master
