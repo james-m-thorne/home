@@ -1,4 +1,3 @@
-require('newrelic');
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
