@@ -66,7 +66,7 @@ function App() {
     <ThemeProvider theme={appliedTheme}>
       <Navbar>
         <div>
-          Hello World
+          Hello Caleb
         </div>
         <Button variant="contained" className={classes.themeSelector} onClick={handleToggleTheme}>
           {icon}
