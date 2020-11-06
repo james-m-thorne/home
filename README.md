@@ -4,7 +4,7 @@
 ### K3s Cluster Setup
 ```sh
 curl https://releases.rancher.com/install-docker/19.03.sh | sh
-curl -sfL https://get.k3s.io | sh -s - --docker
+curl -sfL https://get.k3s.io | sh -s - --docke
 ```
 
 ### Build Image for RaspberryPi
