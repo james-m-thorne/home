@@ -21,12 +21,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
-        env:
-        - name: NR_LICENSE_KEY
-          valueFrom:
-            secretKeyRef:
-              name: home-secrets
-              key: NR_LICENSE_KEY
 ---
 apiVersion: v1
 kind: Service
