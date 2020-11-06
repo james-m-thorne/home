@@ -12,4 +12,6 @@ An example is shown below:
 ![image](https://user-images.githubusercontent.com/52871491/98344751-92715f80-2078-11eb-8e5e-26ea087cb213.png)
 
 ## CICD
-CICD pipeline is created using GitHub Actions. This will build the Docker image on `lunix/arm/v7` and deploy it on my Kubernetes cluster at home. 
+CICD pipeline is created using GitHub Actions. This will build the Docker image on `linux/arm/v7` and deploy it on my Kubernetes cluster at home using the steps shown below:
+
+![image](https://user-images.githubusercontent.com/52871491/98346035-517a4a80-207a-11eb-8889-26db4f66a93d.png)
