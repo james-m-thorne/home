@@ -1,13 +1,11 @@
 
 # Home Website on RaspberryPi Kubernetes Cluster 
 
-### K3s Cluster Setup
-```sh
-curl https://releases.rancher.com/install-docker/19.03.sh | sh
-curl -sfL https://get.k3s.io | sh -s - --docke
-```
+## Monitoring 
+A New Relic dashboard has been set up to monitor the performance of my SPA. This was set up using 
+- New Relic Browser to monitor the load times, throughtput, and JS errors for the site
+- New Relic Synthetics to constantly check the health of the site
 
-### Build Image for RaspberryPi
-```sh
-docker buildx build --platform linux/arm/v7,linux/arm/v6 --output type=registry -t jamesmthorne/pi-site:latest .
-```
+
+## Deployment
+This deployment is automated using GitHub Actions. This will build the Docker image on `lunix/arm/v7` and deploy it on my Kubernetes cluster at home. 
