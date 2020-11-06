@@ -1,10 +1,11 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+require('newrelic');
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import Brightness3Icon from '@material-ui/icons/Brightness3';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness3Icon from '@material-ui/icons/Brightness3'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Navbar from './navbar/Navbar'
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme) => ({
   themeSelector: {
@@ -32,7 +33,7 @@ const lightTheme = createMuiTheme({
       contrastText: '#000',
     },
   },
-});
+})
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -49,7 +50,7 @@ const darkTheme = createMuiTheme({
       contrastText: '#000',
     },
   },
-});
+})
 
 function App() {
   let [theme, setTheme] = useState(false)
