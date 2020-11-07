@@ -1,7 +1,12 @@
 
 # Home Website on RaspberryPi Kubernetes Cluster 
 
-My overkill website at http://james-home.tk hosted on a RaspberryPi at home. It is complete with monitoring from New Relic, a full deployment on Kubernetes, CICD pipeline using GitHub Actions, and a React SPA frontend. 
+My overkill website at https://thorney.me hosted on a RaspberryPi at home. It is created with:
+- Deployment on Kubernetes with K3s
+- Monitoring from New Relic 
+- CICD pipeline using GitHub Actions
+- React SPA frontend
+- Terraform to create Route53, ACM, and Cloudfront resources
 
 ## Monitoring 
 A New Relic dashboard has been set up to monitor the performance of my SPA using:
