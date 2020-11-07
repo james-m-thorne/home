@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 kube/secrets.yaml
+terraform/.terraform/
+terraform/crash.log
