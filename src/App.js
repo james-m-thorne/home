@@ -1,3 +1,4 @@
+import './index.css'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
@@ -37,9 +38,9 @@ const lightTheme = createMuiTheme({
 const darkTheme = createMuiTheme({
   palette: {
     primary: {
-      light: '#757ce8',
+      light: '#666',
       main: '#333',
-      dark: '#002884',
+      dark: '#222',
       contrastText: '#fff',
     },
     secondary: {
@@ -54,13 +55,10 @@ const darkTheme = createMuiTheme({
 function App() {
   let [theme, setTheme] = useState(false)
   const classes = useStyles()
-  const icon = !theme ? <Brightness7Icon /> : <Brightness3Icon /> 
-
+  const icon = !theme ? <Brightness7Icon /> : <Brightness3Icon />
   const appliedTheme = createMuiTheme(theme ? lightTheme : darkTheme)
 
-  const handleToggleTheme = () => {
-    setTheme(!theme)
-  }
+  const handleToggleTheme = () => setTheme(!theme)
 
   return (
     <ThemeProvider theme={appliedTheme}>

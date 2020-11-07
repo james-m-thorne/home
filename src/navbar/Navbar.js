@@ -1,16 +1,17 @@
 import React from 'react'
 import clsx from 'clsx'
-import { useTheme } from '@material-ui/core/styles'
-import { 
-  Drawer, AppBar, Toolbar, List, ListItem, ListItemText, 
-  CssBaseline, Divider, IconButton 
-} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
+import Assignment from '@material-ui/icons/Assignment'
+import Info from '@material-ui/icons/Info'
 import MailIcon from '@material-ui/icons/Mail'
+import { useTheme } from '@material-ui/core/styles'
+import {
+  SwipeableDrawer, AppBar, Toolbar, List, ListItem, ListItemText,
+  CssBaseline, Divider, IconButton
+} from '@material-ui/core'
 import { useStyles } from './Navbar.styles'
 
 export default function Navbar(props) {
@@ -24,6 +25,12 @@ export default function Navbar(props) {
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+
+  const sideBarIcons = {
+    'About': <Info/>,
+    'Projects': <Assignment/>,
+    'Contact': <MailIcon/>
   }
 
   return (
@@ -49,8 +56,12 @@ export default function Navbar(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
+      <SwipeableDrawer
         variant="permanent"
+        open={open}
+        onClose={handleDrawerClose}
+        onOpen={handleDrawerOpen}
+        swipeAreaWidth={50}
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
           [classes.drawerClose]: !open,
@@ -69,17 +80,17 @@ export default function Navbar(props) {
         </div>
         <Divider />
         <List>
-          {['About', 'Projects', 'Contact'].map((text, index) => (
+          {Object.entries(sideBarIcons).map(([text, icon]) => (
             <ListItem button key={text}>
               <ListItemIcon className={classes.menuIcon}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {icon}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
-      </Drawer>
-      <main className={classes.content}>
+      </SwipeableDrawer>
+      <main className={classes.content} onClick={open ? handleDrawerClose : undefined}>
         <div className={classes.toolbar} />
         {props.children}
       </main>

@@ -5,6 +5,7 @@ const drawerWidth = 240
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '100%'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
