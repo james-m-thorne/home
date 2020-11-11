@@ -23,6 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+kube/config
 kube/secrets.yaml
 terraform/.terraform/
 terraform/crash.log
