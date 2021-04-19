@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 locals {
-  public_ip = "115.188.91.157"
+  public_ip = "122.57.159.132"
   site = "thorney.me"
   origin_id = "home-website"
 }
@@ -55,7 +55,7 @@ resource "aws_cloudfront_distribution" "home_distribution" {
     error_caching_min_ttl = 0
   }
 
-  aliases = [local.site]
+  aliases = [local.site, "www.${local.site}", "home.${local.site}"]
 
   enabled             = true
   default_root_object = "index.html"

@@ -16,22 +16,9 @@ spec:
       containers:
       - name: postgres
         image: postgres:latest
-        env:
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: home-secrets
-              key: POSTGRES_USER
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: home-secrets
-              key: POSTGRES_PASSWORD
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: home-secrets
-              key: POSTGRES_DB
+        envFrom:
+        - secretRef:
+            name: home-secrets
         ports:
         - containerPort: 5432
           name: postgredb
