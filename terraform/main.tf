@@ -14,7 +14,7 @@ resource "aws_route53_zone" "zone" {
 }
 
 resource "aws_route53_record" "cloudfront_domain" {
-  name = aws_route53_zone.zone.name
+  name = local.site
   type = "A"
   zone_id = aws_route53_zone.zone.zone_id
 
@@ -26,8 +26,20 @@ resource "aws_route53_record" "cloudfront_domain" {
 }
 
 resource "aws_route53_record" "www" {
+  name = "www.${local.site}"
+  type = "A"
   zone_id = aws_route53_zone.zone.zone_id
-  name    = "www.${local.site}"
+
+  alias {
+    name                   = aws_cloudfront_distribution.home_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.home_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "api" {
+  zone_id = aws_route53_zone.zone.zone_id
+  name    = "api.${local.site}"
   type    = "A"
   ttl     = "300"
   records = [local.public_ip]
@@ -55,7 +67,7 @@ resource "aws_cloudfront_distribution" "home_distribution" {
     error_caching_min_ttl = 0
   }
 
-  aliases = [local.site, "www.${local.site}", "home.${local.site}"]
+  aliases = [local.site, "www.${local.site}"]
 
   enabled             = true
   default_root_object = "index.html"
