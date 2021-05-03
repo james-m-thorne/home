@@ -56,7 +56,7 @@ resource "aws_cloudfront_distribution" "home_distribution" {
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
-    domain_name = "www.${local.site}"
+    domain_name = "api.${local.site}"
     origin_id = local.origin_id
   }
 
