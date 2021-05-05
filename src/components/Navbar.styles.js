@@ -1,4 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
+
 
 const drawerWidth = 240
 
@@ -67,5 +68,13 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  themeSelector: {
+    position: 'absolute',
+    right: 50,
+    bottom: 50,
+    borderRadius: '50%',
+    height: 65,
+    width: 65
   },
 }))

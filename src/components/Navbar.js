@@ -1,36 +1,34 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import MenuIcon from '@material-ui/icons/Menu'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import Assignment from '@material-ui/icons/Assignment'
-import Info from '@material-ui/icons/Info'
-import MailIcon from '@material-ui/icons/Mail'
-import { useTheme } from '@material-ui/core/styles'
+import Brightness3Icon from '@material-ui/icons/Brightness3'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
+import Home from '@material-ui/icons/Home'
+import Mail from '@material-ui/icons/Mail'
 import {
   SwipeableDrawer, AppBar, Toolbar, List, ListItem, ListItemText,
   CssBaseline, Divider, IconButton
 } from '@material-ui/core'
 import { useStyles } from './Navbar.styles'
+import { Button } from '@material-ui/core'
+import { useRecoilState } from 'recoil'
+import { themeState } from '../recoil/atoms'
 
 export default function Navbar(props) {
   const classes = useStyles()
-  const theme = useTheme()
+  const history = useHistory()
   const [open, setOpen] = React.useState(false)
+  const [theme, setTheme] = useRecoilState(themeState)
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
+  const handleDrawerClose = () => setOpen(false)
+  const handleDrawerOpen = () => setOpen(true)
 
   const sideBarIcons = {
-    'About': <Info/>,
-    'Projects': <Assignment/>,
-    'Contact': <MailIcon/>
+    'Shared Home Finder': {icon: <Home/>, route: 'homefinder'}
   }
 
   return (
@@ -80,10 +78,10 @@ export default function Navbar(props) {
         </div>
         <Divider />
         <List>
-          {Object.entries(sideBarIcons).map(([text, icon]) => (
-            <ListItem button key={text}>
+          {Object.entries(sideBarIcons).map(([text, data]) => (
+            <ListItem button key={text} onClick={() => history.push(data.route)}>
               <ListItemIcon className={classes.menuIcon}>
-                {icon}
+                {data.icon}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -93,6 +91,9 @@ export default function Navbar(props) {
       <main className={classes.content} onClick={open ? handleDrawerClose : undefined}>
         <div className={classes.toolbar} />
         {props.children}
+        <Button variant="contained" className={classes.themeSelector} onClick={() => setTheme(!theme)}>
+          {!theme ? <Brightness7Icon /> : <Brightness3Icon />}
+        </Button>
       </main>
     </div>
   )
