@@ -10,7 +10,7 @@ function HomeFinder() {
   
   return (
     <div className={classes.maxHeight}>
-      <MapContainer center={aucklandLatLong} zoom={13} scrollWheelZoom={true} className={classes.maxHeight}>
+      <MapContainer center={aucklandLatLong} zoom={13} scrollWheelZoom={true} style={{height: '100%'}}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
