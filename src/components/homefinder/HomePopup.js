@@ -18,9 +18,11 @@ function HomePopup({ peopleRoutes }) {
   const loading = () => (
     <div>
       <Skeleton variant="text" />
-      <Skeleton variant="rect" width={250} height={100} />
+      <Skeleton variant="rect" width={80} height={15} />
       <Skeleton variant="text" />
-      <Skeleton variant="rect" width={250} height={50} />
+      <Skeleton variant="rect" width={80} height={15} />
+      <Skeleton variant="text" />
+      <Skeleton variant="rect" width={80} height={15} />
     </div>
   )
   
