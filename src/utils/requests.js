@@ -12,7 +12,12 @@ export const planRoute = async (from, to) => {
   const url = `${API_URL}/plan?from=a&to=b&fromLoc=${from}&toLoc=${to}&timeMode=A&date=2021-05-06T18%3A58%2B12%3A00&modes=BUS,TRAIN,FERRY&operators=&optimize=QUICK&maxWalk=1000&maxChanges=-1&routes=&showExternalProviders=true&subscription-key=693150c317fc42c5a2f871aee3f586af`
   const data = await makeRequest(url)
   const itineraries = data?.response?.itineraries
-  return itineraries[0].durationStr
+  if (!itineraries) return { duration: 0, legs: []}
+
+  const firstRoute = itineraries[0]
+  let { duration, legs } = firstRoute
+  legs = legs.map(leg => ({duration: leg?.duration, geometry: leg?.legGeometry?.points}))
+  return { duration, legs }
 }
 
 export const getHomes = async (encodedBounds) => {
