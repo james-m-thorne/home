@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from 'react'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { homeIcon } from './HomeFinder.styles'
 import HomePopup from './HomePopup'
 import * as polyUtil from 'polyline-encoded'
-import { getHomes, planRoute } from '../../utils/requests'
+import { planRoute, getHomeData, getHomes } from '../../utils/requests'
 import { PEOPLE } from '../../constants/constants'
+import { homeDetailsState, selectedHomeState } from '../../recoil/atoms'
 
 function CurrentHomes() {
   const map = useMap()
   const encode = (bounds) => polyUtil.encode([bounds.getNorthWest(), bounds.getSouthWest(), bounds.getSouthEast(), bounds.getNorthEast(), bounds.getNorthWest()])
 
-  const [peopleRoutes, setPeopleRoutes] = useState([])
-  const [homes, setHomes] = useState([])
-  const [clickedHome, setClickedHome] = useState()
-  const [encodedBounds, setEncodedBounds] = useState(encode(map.getBounds()))
+  const resetHomeDetails = useResetRecoilState(homeDetailsState)
+  const [homeDetails, setHomeDetails] = useRecoilState(homeDetailsState)
+  const [selectedHome, setSelectedHome] = useRecoilState(selectedHomeState)
+
   const [people, setPeople] = useState(PEOPLE)
+  const [homes, setHomes] = useState([])
+  const [encodedBounds, setEncodedBounds] = useState(encode(map.getBounds()))
 
   useMapEvents({
     moveend: () => setEncodedBounds(encode(map.getBounds()))
   })
 
   useEffect(() => {
-    if (!clickedHome) return
+    if (!selectedHome.url) return
 
-    const findRouteTimes = async (clickedHome) => {
+    const findHomeDetails = async (selectedHome) => {
+      const homeDataPromise = getHomeData(selectedHome.url)
+  
       const personPromises = people.map(async (person) => {
         const locationPromises = person.locations.map(async (location) => {
-          const firstRoute = await planRoute([clickedHome.lat, clickedHome.lng], location.latlng)
+          const firstRoute = await planRoute([selectedHome.point.lat, selectedHome.point.long], location.latlng)
           return {...location, ...firstRoute}
         })
   
@@ -38,16 +44,18 @@ function CurrentHomes() {
         return {...person, locations}
       })
   
-      let peopleWithTimes = []
+      let peopleDetails = []
       for (let promise of personPromises) {
         const person = await promise
-        peopleWithTimes.push(person)
+        peopleDetails.push(person)
       }
-      return peopleWithTimes
+  
+      const homeData = await homeDataPromise
+      return {data: homeData.card?.property_details, people: peopleDetails}
     }
 
-    findRouteTimes(clickedHome).then(result => setPeopleRoutes(result))
-  }, [clickedHome, people])
+    findHomeDetails(selectedHome).then(result => setHomeDetails({...result, url: selectedHome.url}))
+  }, [selectedHome, people])
 
   useEffect(() => {
     getHomes(encodedBounds).then(fetchedHomes => {
@@ -60,27 +68,33 @@ function CurrentHomes() {
   const getMarkers = () => (
     homes.map(home =>
       <Marker 
-        key={home.id} position={[home.point.lat, home.point.long]} icon={homeIcon}
+        key={home.id} 
+        position={[home.point.lat, home.point.long]} 
+        icon={homeIcon}
         eventHandlers={{
-          click: (home) => {
-            setPeopleRoutes([])
-            setClickedHome(home.latlng)
+          click: () => {
+            resetHomeDetails()
+            setSelectedHome(home)
           }
         }}
       >
-        <HomePopup peopleRoutes={peopleRoutes} />
+        <HomePopup />
       </Marker>
     )
   )
 
   const getLines = () => (
-    peopleRoutes.map(person => (
-      person.locations.map(location => (
-        location.legs.map(leg => {
-          const geometry = polyUtil.decode(leg.geometry)
-          return <Polyline key={leg.geometry} positions={geometry} color={person.color} />
-        })
-      ))
+    homeDetails.people.map(person => (
+      person.locations.map(location => {
+        const legs = location?.legs
+        if (legs) {
+          return location.legs.map(leg => {
+            const geometry = polyUtil.decode(leg.geometry)
+            return <Polyline key={leg.geometry} positions={geometry} color={person.color} />
+          })
+        }
+        return null
+      })
     ))
   )
 
