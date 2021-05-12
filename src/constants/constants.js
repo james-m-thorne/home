@@ -1,5 +1,5 @@
 
-export const API_URL = 'https://3b83e40z07.execute-api.us-east-1.amazonaws.com'
+export const API_URL = 'https://3b83e40z07.execute-api.us-east-1.amazonaws.com/prod'
 
 export const PEOPLE = [
   {
