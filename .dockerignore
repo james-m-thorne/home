@@ -1,4 +1,6 @@
 node_modules/
 .gibhub/
-.kube/
+kube/
+terraform/
+build/
 README.md
