@@ -10,8 +10,9 @@ module "get_user_lambda" {
   function_name = "get-user"
   handler       = "lambda_function.main"
   runtime       = "python3.8"
-  publish = true
-  source_path = local.lambda_path
+  publish       = true
+  source_path   = local.lambda_path
+  reserved_concurrent_executions = 10
 
   attach_policy_statements = true
   policy_statements = {

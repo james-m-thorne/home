@@ -111,7 +111,8 @@ resource "aws_cloudfront_distribution" "home_distribution" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "none"
+      restriction_type = "whitelist"
+      locations        = ["NZ"]
     }
   }
 
