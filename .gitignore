@@ -27,4 +27,5 @@ kube/config
 kube/secrets.yaml
 terraform/.terraform/
 terraform/crash.log
+terraform/builds/
 package/
