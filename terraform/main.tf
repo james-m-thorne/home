@@ -3,7 +3,3 @@ provider "aws" {
 }
 
 provider "archive" {}
-
-module "lambda-get-user" {
-   source = "./lambda/get-user"
-}

@@ -12,6 +12,17 @@ resource "aws_apigatewayv2_stage" "api_stage" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "prod"
   auto_deploy = true
+
+  default_route_settings {
+    throttling_burst_limit = 10
+    throttling_rate_limit  = 100
+  }
+}
+
+resource "aws_apigatewayv2_api_mapping" "api_mapping" {
+  api_id      = aws_apigatewayv2_api.api.id
+  domain_name = aws_apigatewayv2_domain_name.api_domain.id
+  stage       = aws_apigatewayv2_stage.api_stage.id
 }
 
 resource "aws_apigatewayv2_integration" "api_integration_map" {
@@ -51,4 +62,18 @@ resource "aws_apigatewayv2_route" "api_route_property" {
   api_id    = aws_apigatewayv2_api.api.id
   route_key = "GET /property"
   target = "integrations/${aws_apigatewayv2_integration.api_integration_property.id}"
+}
+
+resource "aws_apigatewayv2_integration" "get_user_api_integration" {
+  api_id           = aws_apigatewayv2_api.api.id
+  integration_type = "AWS_PROXY"
+  description               = "Get user details Lambda"
+  integration_method        = "POST"
+  integration_uri           = module.get_user_lambda.lambda_function_invoke_arn
+}
+
+resource "aws_apigatewayv2_route" "get_user_api_route" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "GET /users"
+  target = "integrations/${aws_apigatewayv2_integration.get_user_api_integration.id}"
 }

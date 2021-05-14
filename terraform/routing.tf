@@ -10,6 +10,28 @@ resource "aws_route53_zone" "zone" {
   name = local.site
 }
 
+resource "aws_route53_record" "gateway" {
+  name    = aws_apigatewayv2_domain_name.api_domain.domain_name
+  type    = "A"
+  zone_id = aws_route53_zone.zone.zone_id
+
+  alias {
+    name                   = aws_apigatewayv2_domain_name.api_domain.domain_name_configuration[0].target_domain_name
+    zone_id                = aws_apigatewayv2_domain_name.api_domain.domain_name_configuration[0].hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_apigatewayv2_domain_name" "api_domain" {
+  domain_name = "gateway.${local.site}"
+
+  domain_name_configuration {
+    certificate_arn = aws_acm_certificate.cert.arn
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
+}
+
 resource "aws_route53_record" "cloudfront_domain" {
   name = local.site
   type = "A"
