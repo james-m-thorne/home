@@ -1,6 +1,6 @@
 {
-  "short_name": "Pi Site",
-  "name": "My RaspberryPi Website",
+  "short_name": "Home Finder",
+  "name": "Home Finder",
   "icons": [
     {
       "src": "favicon.ico",
