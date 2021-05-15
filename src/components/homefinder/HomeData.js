@@ -11,16 +11,22 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 
 const HomeData = ({ data }) => {
+  const SkeletonCenter = () => (
+    <Grid container direction="column" alignContent="center" justify="center" alignItems="center">
+      <Skeleton variant="circle" width={50} height={50} />
+    </Grid>
+  )
+
   if (Object.keys(data).length === 0) {
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={12}><Skeleton variant="rect" width={150} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
-        <Grid item xs={4}><Skeleton variant="circle" width={40} height={40} /></Grid>
+      <Grid container spacing={1} alignContent="center" justify="center" alignItems="center">
+        <Grid item xs={12}><Skeleton variant="rect" height={40} /></Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
+        <Grid item xs={4}>{SkeletonCenter()}</Grid>
       </Grid>
     )
   }

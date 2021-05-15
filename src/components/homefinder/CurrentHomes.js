@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { homeIcon } from './HomeFinder.styles'
-import HomePopup from './HomePopup'
 import * as polyUtil from 'polyline-encoded'
 import { planRoute, getHomeData, getHomes } from '../../utils/requests'
 import { PEOPLE } from '../../constants/constants'
@@ -77,9 +76,7 @@ function CurrentHomes() {
             setSelectedHome(home)
           }
         }}
-      >
-        <HomePopup />
-      </Marker>
+      />
     )
   )
 

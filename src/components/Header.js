@@ -7,10 +7,14 @@ import {
   Drawer,
   Link,
   MenuItem,
+  ListItemIcon,
+  ListItemText
 } from "@material-ui/core"
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
-import MenuIcon from "@material-ui/icons/Menu"
+import MenuIcon from '@material-ui/icons/Menu'
+import HomeIcon from '@material-ui/icons/Home'
+import PhoneIcon from '@material-ui/icons/Phone'
 import React, { useState, useEffect } from "react"
 import { useRecoilState } from 'recoil'
 import { Link as RouterLink } from "react-router-dom"
@@ -27,10 +31,12 @@ export default function Header() {
   const headersData = [
     {
       label: "Home Finder",
+      icon: <HomeIcon />,
       href: "/homefinder",
     },
     {
       label: "Contact",
+      icon: <PhoneIcon />,
       href: "/contact",
     },
   ]
@@ -105,7 +111,7 @@ export default function Header() {
           }}
         >
           <div className={classes.drawerContainer}>
-            {headersData.map(({ label, href }) => 
+            {headersData.map(({ label, href, icon }) => 
               <Link
                 {...{
                   component: RouterLink,
@@ -115,7 +121,10 @@ export default function Header() {
                   key: label,
                 }}
               >
-                <MenuItem>{label}</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText>{label}</ListItemText>
+                </MenuItem>
               </Link>
             )}
           </div>

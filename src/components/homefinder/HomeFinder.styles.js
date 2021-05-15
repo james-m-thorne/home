@@ -21,5 +21,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   maxHeight: {
     height: '100%'
+  },
+  card: {
+    zIndex: 1000,
+    position: 'absolute',
+    margin: 20,
+    maxWidth: 350
   }
 }))

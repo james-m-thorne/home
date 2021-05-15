@@ -9,7 +9,11 @@ export const makeRequest = async (url, options={}) => {
 }
 
 export const planRoute = async (from, to) => {
-  const url = `${API_URL}/plan?from=a&to=b&fromLoc=${from}&toLoc=${to}&timeMode=A&date=2021-05-12T07%3A30%2B12%3A00&modes=BUS,TRAIN,FERRY&operators&optimize=QUICK&maxWalk=1000&maxChanges=-1&routes&showExternalProviders=true&subscription-key=693150c317fc42c5a2f871aee3f586af`
+  const date = new Date()
+  const month = (date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2})
+  const day = date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2})
+
+  const url = `${API_URL}/plan?from=a&to=b&fromLoc=${from}&toLoc=${to}&timeMode=A&date=${date.getFullYear()}-${month}-${day}T07%3A30%2B12%3A00&modes=BUS,TRAIN,FERRY&operators=&optimize=QUICK&maxWalk=1000&maxChanges=-1&routes=&showExternalProviders=true&subscription-key=693150c317fc42c5a2f871aee3f586af`
   const data = await makeRequest(url)
   const itineraries = data?.response?.itineraries
   if (!itineraries) return { duration: 0, legs: []}
