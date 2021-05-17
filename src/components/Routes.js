@@ -6,7 +6,7 @@ import {
   Route
 } from "react-router-dom"
 import Header from './Header'
-import HomeFinder from './homefinder/HomeFinder'
+import Map from './homefinder/Map'
 import { useRecoilValue } from 'recoil'
 import { themeState } from '../recoil/atoms'
 import { useStyles, lightTheme, darkTheme } from './Routes.styles'
@@ -23,7 +23,7 @@ function Routes() {
           <main className={classes.body}>
             <Switch>
               <Route path='/'>
-                <HomeFinder />
+                <Map />
               </Route>
             </Switch>
           </main>

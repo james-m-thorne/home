@@ -1,5 +1,6 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import HomeIcon from '@material-ui/icons/Home'
@@ -48,7 +49,7 @@ const HomeData = ({ data }) => {
         {icon}
       </Grid>
       <Grid item>
-        {text ? text : 'No Data'}
+        <Typography variant={'body2'}>{text ? text : 'No Data'}</Typography>
       </Grid>
     </Grid>
   )

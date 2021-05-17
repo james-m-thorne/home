@@ -3,6 +3,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  Switch,
   IconButton,
   Drawer,
   Link,
@@ -10,8 +11,6 @@ import {
   ListItemIcon,
   ListItemText
 } from "@material-ui/core"
-import Brightness3Icon from '@material-ui/icons/Brightness3'
-import Brightness7Icon from '@material-ui/icons/Brightness7'
 import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import PhoneIcon from '@material-ui/icons/Phone'
@@ -19,20 +18,20 @@ import React, { useState, useEffect } from "react"
 import { useRecoilState } from 'recoil'
 import { Link as RouterLink } from "react-router-dom"
 import { useStyles } from "./Header.styles"
-import { themeState } from '../recoil/atoms'
+import { themeState, mobileViewState } from '../recoil/atoms'
 
 
 export default function Header() {
   const classes = useStyles()
-  const [mobileView, setMobileView] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [mobileView, setMobileView] = useRecoilState(mobileViewState)
   const [theme, setTheme] = useRecoilState(themeState)
 
   const headersData = [
     {
-      label: "Home Finder",
+      label: "Map",
       icon: <HomeIcon />,
-      href: "/homefinder",
+      href: "/map",
     },
     {
       label: "Contact",
@@ -42,27 +41,20 @@ export default function Header() {
   ]
 
   useEffect(() => {
-    const setResponsiveness = () => {
-      return window.innerWidth < 900 ? setMobileView(true) : setMobileView(false)
-    }
-    setResponsiveness()
-    window.addEventListener("resize", () => setResponsiveness())
-  }, [])
+    setMobileView(window.innerWidth < 500)
+    window.addEventListener("resize", () => setMobileView(window.innerWidth < 500))
+  }, [setMobileView])
 
   const logo = (
     <Typography variant="h6" component="h1" className={classes.logo}>
-      Thorney
+      Home Finder
     </Typography>
   )
 
   const themeIconButton = () => (
-    <IconButton
-      color="inherit"
-      className={classes.menuButton}
-      onClick={() => setTheme(!theme)}
-    >
-      {!theme ? <Brightness7Icon /> : <Brightness3Icon />}
-    </IconButton>
+    <Switch
+      onChange={() => setTheme(!theme)}
+    />
   )
 
   const displayDesktop = () => {

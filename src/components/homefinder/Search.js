@@ -7,7 +7,7 @@ import { useStyles } from './Search.styles'
 function Search() {
   const classes = useStyles()
   return (
-    <Card>
+    <Card elevation={0}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />

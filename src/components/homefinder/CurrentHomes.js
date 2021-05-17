@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
-import { homeIcon } from './HomeFinder.styles'
+import { homeIcon } from './Map.styles'
 import * as polyUtil from 'polyline-encoded'
 import { planRoute, getHomeData, getHomes } from '../../utils/requests'
 import { PEOPLE } from '../../constants/constants'

@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -18,29 +20,37 @@ function HomeDetails() {
   const resetSelectedHome = useResetRecoilState(selectedHomeState)
 
   const getRouteData = (person) => (
-    <div key={person.name}>
-      <b>{`${person.name} (${person.color})`}</b>
+    <Grid item xs={4} key={person.name}>
+      <Typography variant={'body2'} className={classes.smallText}><b>{`${person.name} (${person.color})`}</b></Typography>
       <div>
         {person.locations.map(location =>  
-          <span key={location.duration}>{`${location.name} - ${location.duration / 1000 / 60} mins`}</span>
+          <Typography variant={'body2'} key={location.duration} className={classes.smallText}>{`${location.name} - ${location.duration / 1000 / 60} mins`}</Typography>
         )}
       </div>
-    </div>
+    </Grid>
   )
 
+  const routeData = () => {
+    if (Object.keys(homeDetails.people).length === 0) {
+      return loadingRouteData() 
+    }
+
+    return (
+      <Grid container spacing={2}>
+        {homeDetails.people.map(person => getRouteData(person))}
+      </Grid>
+    )
+  }
+
   const loadingRouteData = () => (
-    <div>
+    <>
       <Skeleton variant="text" />
       <Skeleton variant="rect" height={20} />
-      <Skeleton variant="text" />
-      <Skeleton variant="rect" height={20} />
-      <Skeleton variant="text" />
-      <Skeleton variant="rect" height={20} />
-    </div>
+    </>
   )
 
   return (
-    <Card className={classes.card}>
+    <Card elevation={0}>
       <CardContent>
         <Box display='flex' flexGrow={1}>
           <IconButton aria-label="settings" size={'small'} onClick={resetSelectedHome} className={classes.closeButton}>
@@ -48,11 +58,7 @@ function HomeDetails() {
           </IconButton>
         </Box>
         <HomeData data={homeDetails.data} />
-        { 
-          Object.keys(homeDetails.people).length !== 0 ? 
-            homeDetails.people.map(person => getRouteData(person))
-            : loadingRouteData() 
-        }
+        {routeData()}
       </CardContent>
       <CardActions>
         {

@@ -3,6 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
+    boxShadow: 'none',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -10,9 +11,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    [theme.breakpoints.up('sm')]: {
-      marginRight: 40,
-    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -32,9 +30,6 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
   }
 }))
 

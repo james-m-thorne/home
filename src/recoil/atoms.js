@@ -14,3 +14,8 @@ export const selectedHomeState = atom({
     key: 'selectedHomeState',
     default: {url: ''},
 })
+
+export const mobileViewState = atom({
+    key: 'mobileViewState',
+    default: false,
+})
