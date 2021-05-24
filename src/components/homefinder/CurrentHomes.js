@@ -5,7 +5,7 @@ import { homeIcon } from './Map.styles'
 import * as polyUtil from 'polyline-encoded'
 import { planRoute, getHomeData, getHomes } from '../../utils/requests'
 import { PEOPLE } from '../../constants/constants'
-import { homeDetailsState, selectedHomeState } from '../../recoil/atoms'
+import { homesState, homeDetailsState, selectedHomeState } from '../../recoil/atoms'
 
 function CurrentHomes() {
   const map = useMap()
@@ -16,7 +16,7 @@ function CurrentHomes() {
   const [selectedHome, setSelectedHome] = useRecoilState(selectedHomeState)
 
   const [people, setPeople] = useState(PEOPLE)
-  const [homes, setHomes] = useState([])
+  const [homes, setHomes] = useRecoilState(homesState)
   const [encodedBounds, setEncodedBounds] = useState(encode(map.getBounds()))
 
   useMapEvents({

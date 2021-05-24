@@ -9,8 +9,6 @@ export const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
   },
   searchIcon: {
     padding: theme.spacing(0, 2),

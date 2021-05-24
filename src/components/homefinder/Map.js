@@ -17,7 +17,7 @@ function Map() {
         />
         <Pane />
         <CurrentHomes />
-        <ZoomControl position={'bottomright'} />
+        <ZoomControl position={'topright'} />
       </MapContainer>
     </div>
   )

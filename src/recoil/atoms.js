@@ -5,6 +5,11 @@ export const themeState = atom({
     default: true,
 })
 
+export const homesState = atom({
+    key: 'homesState',
+    default: [],
+})
+
 export const homeDetailsState = atom({
     key: 'homeDetailsState',
     default: {data: {}, people: [], url: ''},

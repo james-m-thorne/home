@@ -34,3 +34,8 @@ export const getHomeData = async (homeUrl) => {
   const url = `${API_URL}/property?url=${homeUrl}`
   return await makeRequest(url)
 }
+
+export const searchHomes = async (filter) => {
+  const url = `${API_URL}/search?Address=${filter}`
+  return await makeRequest(url)
+}
