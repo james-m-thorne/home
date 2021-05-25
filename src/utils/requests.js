@@ -26,7 +26,19 @@ export const planRoute = async (from, to) => {
 
 export const getHomes = async (encodedBounds) => {
   const url = `${API_URL}/map`
-  const body = {"polylines":[encodedBounds],"limit":1500,"display_rentals":false,"for_rent":false,"for_sale":true,"just_sold":false,"off_market":false}
+  const body = {
+    polylines: [encodedBounds],
+    limit: 1500,
+    display_rentals: false,
+    for_rent: false,
+    for_sale: true,
+    just_sold: false,
+    off_market: false,
+    num_bathrooms: 2,
+    num_bedrooms: 3,
+    sale_min: 900000,
+    sale_max: 1700000
+  }
   return await makeRequest(url, {method: 'POST', body: JSON.stringify(body)})
 }
 

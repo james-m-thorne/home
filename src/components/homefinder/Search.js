@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState, useResetRecoilState } from 'recoil'
 import { useMap } from 'react-leaflet'
 import Card from '@material-ui/core/Card'
 import SearchIcon from '@material-ui/icons/Search'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import InputBase from '@material-ui/core/InputBase'
 import { useStyles } from './Search.styles'
-import { homesState, selectedHomeState } from '../../recoil/atoms'
+import { homesState, homeDetailsState, homeRoutesState, selectedHomeState } from '../../recoil/atoms'
 
 function Search() {
   const classes = useStyles()
 
   const homes = useRecoilValue(homesState)
+  const resetHomeDetails = useResetRecoilState(homeDetailsState)
+  const resetHomeRoutes = useResetRecoilState(homeRoutesState)
+
   const setSelectedHome = useSetRecoilState(selectedHomeState)
   const [value, setValue] = useState(null)
   const [options, setOptions] = useState([])
@@ -21,7 +24,7 @@ function Search() {
 
   useEffect(() => {
     if (homes) {
-      setOptions(homes.map(home => {
+      let filteredHomes = homes.map(home => {
         const urlSplit = home.url.split('/')
         const address = urlSplit[3]
         const area = urlSplit[2]
@@ -30,8 +33,10 @@ function Search() {
           title = `${address.replaceAll('-', ' ')}, ${area}`
           title = title.replace(/\b\w/g, l => l.toUpperCase())
         }
-        return {Title: title, ...home}
-      }))
+        return {title: title, ...home}
+      })
+      filteredHomes = filteredHomes.filter(home => home.title !== '')
+      setOptions(filteredHomes)
     }
   }, [homes])
 
@@ -39,8 +44,10 @@ function Search() {
     if (value) {
       map.flyTo({lat: value.point.lat, lng: value.point.long})
       setSelectedHome(value)
+      resetHomeDetails()
+      resetHomeRoutes()
     }
-  }, [value, setSelectedHome, map])
+  }, [value, setSelectedHome, map, resetHomeDetails, resetHomeRoutes])
 
   // useEffect(() => {
   //   let active = true;
@@ -66,8 +73,8 @@ function Search() {
           id={'search-homes'}
           value={value}
           options={options}
-          getOptionLabel={(option) => option.Title}
-          getOptionSelected={(option, value) => option.Title === value.Title}
+          getOptionLabel={(option) => option.title}
+          getOptionSelected={(option, value) => option.title === value.title}
           // onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
           onChange={(_, newValue) => {
             setOptions(newValue ? [newValue, ...options] : options)

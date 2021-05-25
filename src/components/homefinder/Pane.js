@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import Box from '@material-ui/core/Box'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import HomeDetails from './HomeDetails'
 import Search from './Search'
@@ -10,7 +11,7 @@ function Pane() {
   const classes = useStyles()
   const mobileView = useRecoilValue(mobileViewState)
   const selectedHome = useRecoilValue(selectedHomeState)
-  const [drawerOpen, toggleDrawerOpen] = useState(true)
+  const [drawerOpen, toggleDrawerOpen] = useState(false)
 
   const paneChildren = () => (
     <>
@@ -25,21 +26,33 @@ function Pane() {
     </div>
   )
 
+  console.log(classes.root)
+
   const mobilePane = () => (
     <SwipeableDrawer
-      classes={{
-        paper: classes.drawer
-      }}
-      variant={'permanent'}
-      swipeAreaWidth={50}
-      BackdropProps={{invisible: true}}
-      disableBackdropTransition
       anchor={'bottom'}
       open={drawerOpen}
       onClose={() => toggleDrawerOpen(false)}
       onOpen={() => toggleDrawerOpen(true)}
+      // swipeAreaWidth={50}
+      BackdropProps={{invisible: true}}
+      disableBackdropTransition
+      ModalProps={{
+        keepMounted: true,
+      }}
+      classes={{
+        paper: classes.drawer
+      }}
     >
-      {paneChildren()}
+      <Box className={classes.mobileBoxOuter}>
+        <Box className={classes.mobileSwipe} onClick={() => toggleDrawerOpen(true)}>
+          <Box className={classes.mobileChip}/>
+        </Box>
+        <Box className={classes.search}><Search /></Box>
+      </Box>
+      <Box className={classes.mobileBoxDetails}>
+        {selectedHome.url && <HomeDetails />}
+      </Box>
     </SwipeableDrawer>
   )
 
