@@ -1,6 +1,6 @@
 
 locals {
-  public_ip = "122.57.159.132"
+  public_ip = "115.188.149.196"
   site = "thorney.me"
   origin_id = "home-website"
 }
