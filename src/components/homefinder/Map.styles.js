@@ -5,7 +5,7 @@ import L from 'leaflet'
 const homeIcon = new L.Icon({
     iconUrl: homeSvg,
     iconRetinaUrl: homeSvg,
-    iconSize: new L.Point(10, 10),
+    iconSize: new L.Point(15, 15),
 })
 
 export { homeIcon }
