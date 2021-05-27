@@ -4,12 +4,14 @@ import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { homeIcon } from './Map.styles'
 import * as polyUtil from 'polyline-encoded'
 import { planRoute, getHomeData, getHomes } from '../../utils/requests'
-import { homesState, peopleState, homeRoutesState, homeDetailsState, selectedHomeState } from '../../recoil/atoms'
+import { homesState, peopleState, homeRoutesState, homeDetailsState, selectedHomeState, drawerOpenState } from '../../recoil/atoms'
 
 function CurrentHomes() {
   const map = useMap()
   const encode = (bounds) => polyUtil.encode([bounds.getNorthWest(), bounds.getSouthWest(), bounds.getSouthEast(), bounds.getNorthEast(), bounds.getNorthWest()])
 
+
+  const setDrawerOpen = useSetRecoilState(drawerOpenState)
   const resetHomeDetails = useResetRecoilState(homeDetailsState)
   const setHomeDetails = useSetRecoilState(homeDetailsState)
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
@@ -84,6 +86,7 @@ function CurrentHomes() {
             resetHomeDetails()
             resetHomeRoutes()
             setSelectedHome(home)
+            setDrawerOpen(true)
           }
         }}
       />

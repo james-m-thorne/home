@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import InputBase from '@material-ui/core/InputBase'
 import { useStyles } from './Search.styles'
-import { homesState, homeDetailsState, homeRoutesState, selectedHomeState } from '../../recoil/atoms'
+import { homesState, homeDetailsState, homeRoutesState, selectedHomeState, drawerOpenState } from '../../recoil/atoms'
 
 function Search() {
   const classes = useStyles()
@@ -15,6 +15,7 @@ function Search() {
   const resetHomeDetails = useResetRecoilState(homeDetailsState)
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
 
+  const setDrawerOpen = useSetRecoilState(drawerOpenState)
   const setSelectedHome = useSetRecoilState(selectedHomeState)
   const [value, setValue] = useState(null)
   const [options, setOptions] = useState([])
@@ -43,9 +44,10 @@ function Search() {
   useEffect(() => {
     if (value) {
       map.flyTo({lat: value.point.lat, lng: value.point.long})
-      setSelectedHome(value)
       resetHomeDetails()
       resetHomeRoutes()
+      setSelectedHome(value)
+      setDrawerOpen(true)
     }
   }, [value, setSelectedHome, map, resetHomeDetails, resetHomeRoutes])
 

@@ -14,7 +14,7 @@ function RouteData() {
     <>
       <Skeleton variant="text" />
       <Skeleton variant="text" />
-      <Skeleton variant="rect" height={20} />
+      <Skeleton variant="rect" height={25} />
     </>
   )
 

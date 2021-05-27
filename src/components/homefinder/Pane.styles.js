@@ -12,6 +12,7 @@ export const useStyles = makeStyles(() => ({
     right: 0,
     left: 0,
     backgroundColor: '#fff',
+    pointerEvents: 'initial'
   },
   mobileChip: {
     width: 30,
@@ -26,7 +27,6 @@ export const useStyles = makeStyles(() => ({
     width: '100%',
     height: 20,
     position: 'absolute',
-    pointerEvents: 'initial'
   },
   mobileBoxDetails: {
     margin: 16,
@@ -35,7 +35,6 @@ export const useStyles = makeStyles(() => ({
   },
   search: {
     padding: 12,
-    pointerEvents: 'initial'
   },
   card: {
     zIndex: 1000,

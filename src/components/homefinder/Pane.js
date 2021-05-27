@@ -1,32 +1,24 @@
-import React, { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import React from 'react'
+import { useRecoilValue, useRecoilState } from 'recoil'
 import Box from '@material-ui/core/Box'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import HomeDetails from './HomeDetails'
 import Search from './Search'
-import { selectedHomeState, mobileViewState } from '../../recoil/atoms'
+import { selectedHomeState, mobileViewState, drawerOpenState } from '../../recoil/atoms'
 import { useStyles } from './Pane.styles'
 
 function Pane() {
   const classes = useStyles()
   const mobileView = useRecoilValue(mobileViewState)
   const selectedHome = useRecoilValue(selectedHomeState)
-  const [drawerOpen, toggleDrawerOpen] = useState(false)
+  const [drawerOpen, toggleDrawerOpen] = useRecoilState(drawerOpenState)
 
-  const paneChildren = () => (
-    <>
-      <Search />
-      {selectedHome.url && <HomeDetails />}
-    </>
-  )
-  
   const webPane = () => (
     <div className={classes.card}>
-      {paneChildren()}
+      <Search />
+      {selectedHome.url && <HomeDetails />}
     </div>
   )
-
-  console.log(classes.root)
 
   const mobilePane = () => (
     <SwipeableDrawer
@@ -34,18 +26,18 @@ function Pane() {
       open={drawerOpen}
       onClose={() => toggleDrawerOpen(false)}
       onOpen={() => toggleDrawerOpen(true)}
-      // swipeAreaWidth={50}
       BackdropProps={{invisible: true}}
-      disableBackdropTransition
-      ModalProps={{
-        keepMounted: true,
-      }}
-      classes={{
-        paper: classes.drawer
-      }}
+      ModalProps={{keepMounted: true,}}
+      classes={{paper: classes.drawer}}
     >
-      <Box className={classes.mobileBoxOuter}>
-        <Box className={classes.mobileSwipe} onClick={() => toggleDrawerOpen(true)}>
+      <Box 
+        className={classes.mobileBoxOuter}
+        onTouchMove={() => toggleDrawerOpen(true)}
+      >
+        <Box 
+          className={classes.mobileSwipe} 
+          onClick={() => toggleDrawerOpen(true)} 
+        >
           <Box className={classes.mobileChip}/>
         </Box>
         <Box className={classes.search}><Search /></Box>

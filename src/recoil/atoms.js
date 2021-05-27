@@ -35,3 +35,8 @@ export const mobileViewState = atom({
     key: 'mobileViewState',
     default: false,
 })
+
+export const drawerOpenState = atom({
+    key: 'drawerOpenState',
+    default: false,
+})

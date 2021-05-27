@@ -21,7 +21,7 @@ const HomeData = ({ data }) => {
   if (Object.keys(data).length === 0) {
     return (
       <Grid container spacing={1} alignContent="center" justify="center" alignItems="center">
-        <Grid item xs={12}><Skeleton variant="rect" height={40} /></Grid>
+        <Grid item xs={12}><Skeleton variant="rect" height={50} /></Grid>
         <Grid item xs={4}>{SkeletonCenter()}</Grid>
         <Grid item xs={4}>{SkeletonCenter()}</Grid>
         <Grid item xs={4}>{SkeletonCenter()}</Grid>
