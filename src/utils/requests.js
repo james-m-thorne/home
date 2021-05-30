@@ -24,7 +24,7 @@ export const planRoute = async (from, to) => {
   return { duration, legs }
 }
 
-export const getHomes = async (encodedBounds) => {
+export const getHomes = async (encodedBounds, filterHomes) => {
   const url = `${API_URL}/map`
   const body = {
     polylines: [encodedBounds],
@@ -34,10 +34,12 @@ export const getHomes = async (encodedBounds) => {
     for_sale: true,
     just_sold: false,
     off_market: false,
-    num_bathrooms: 2,
-    num_bedrooms: 3,
-    sale_min: 900000,
-    sale_max: 1700000
+    ...(filterHomes.bathMin > 0 && {num_bathrooms: filterHomes.bathMin}),
+    ...(filterHomes.bathMax < 5 && {num_bathrooms_max: filterHomes.bathMax}),
+    ...(filterHomes.bedMin > 0 && {num_bedrooms: filterHomes.bedMin}),
+    ...(filterHomes.bedMax < 5 && {num_bedrooms_max: filterHomes.bedMax}),
+    ...(filterHomes.priceMin > 0 && {sale_max: filterHomes.priceMin}),
+    sale_max: filterHomes.priceMax
   }
   return await makeRequest(url, {method: 'POST', body: JSON.stringify(body)})
 }

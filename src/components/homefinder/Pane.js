@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import HomeDetails from './HomeDetails'
 import Search from './Search'
+import Filter from './Filter'
 import { selectedHomeState, mobileViewState, drawerOpenState } from '../../recoil/atoms'
 import { useStyles } from './Pane.styles'
 
@@ -15,6 +16,7 @@ function Pane() {
 
   const webPane = () => (
     <div className={classes.card}>
+      <Filter />
       <Search />
       {selectedHome.url && <HomeDetails />}
     </div>
@@ -40,9 +42,12 @@ function Pane() {
         >
           <Box className={classes.mobileChip}/>
         </Box>
-        <Box className={classes.search}><Search /></Box>
+        <Box className={classes.search}>
+          <Search />
+        </Box>
       </Box>
       <Box className={classes.mobileBoxDetails}>
+        <Filter />
         {selectedHome.url && <HomeDetails />}
       </Box>
     </SwipeableDrawer>

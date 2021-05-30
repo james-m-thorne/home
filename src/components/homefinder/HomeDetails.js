@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
-import Skeleton from '@material-ui/lab/Skeleton'
 import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
 import { mobileViewState, homeDetailsState, selectedHomeState } from '../../recoil/atoms'
@@ -20,7 +19,7 @@ function HomeDetails() {
   const resetSelectedHome = useResetRecoilState(selectedHomeState)
 
   return (
-    <Card elevation={0} className={classes.card}>
+    <Card elevation={mobileView ? 0 : 1} className={classes.card}>
       <CardContent>
         {!mobileView && <Box display='flex' flexGrow={1}>
           <IconButton aria-label="settings" size={'small'} onClick={resetSelectedHome} className={classes.closeButton}>

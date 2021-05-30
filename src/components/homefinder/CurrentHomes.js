@@ -4,7 +4,7 @@ import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { homeIcon } from './Map.styles'
 import * as polyUtil from 'polyline-encoded'
 import { planRoute, getHomeData, getHomes } from '../../utils/requests'
-import { homesState, peopleState, homeRoutesState, homeDetailsState, selectedHomeState, drawerOpenState } from '../../recoil/atoms'
+import { homesState, peopleState, homeRoutesState, homeDetailsState, selectedHomeState, drawerOpenState, filterHomeState } from '../../recoil/atoms'
 
 function CurrentHomes() {
   const map = useMap()
@@ -19,6 +19,7 @@ function CurrentHomes() {
   const [selectedHome, setSelectedHome] = useRecoilState(selectedHomeState)
 
   const people = useRecoilValue(peopleState)
+  const filterHomes = useRecoilValue(filterHomeState)
   const [homes, setHomes] = useRecoilState(homesState)
   const [encodedBounds, setEncodedBounds] = useState(encode(map.getBounds()))
 
@@ -68,12 +69,12 @@ function CurrentHomes() {
   }, [selectedHome, setHomeDetails])
 
   useEffect(() => {
-    getHomes(encodedBounds).then(fetchedHomes => {
+    getHomes(encodedBounds, filterHomes).then(fetchedHomes => {
       if (fetchedHomes?.map_items) {
         setHomes(fetchedHomes?.map_items)
       }
     })
-  }, [encodedBounds, setHomes])
+  }, [encodedBounds, setHomes, filterHomes])
 
   const getMarkers = () => (
     homes.map(home =>

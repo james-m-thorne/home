@@ -40,3 +40,17 @@ export const drawerOpenState = atom({
     key: 'drawerOpenState',
     default: false,
 })
+
+export const filterHomeState = atom({
+    key: 'filterHomeState',
+    default: {
+        priceMin: 0,
+        priceMax: 1500000,
+        bedMin: 4,
+        bedMax: 5,
+        bathMin: 2,
+        bathMax: 5,
+        carMin: 2,
+        carMax: 5,
+    },
+})

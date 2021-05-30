@@ -6,12 +6,13 @@ import SearchIcon from '@material-ui/icons/Search'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import InputBase from '@material-ui/core/InputBase'
 import { useStyles } from './Search.styles'
-import { homesState, homeDetailsState, homeRoutesState, selectedHomeState, drawerOpenState } from '../../recoil/atoms'
+import { homesState, homeDetailsState, homeRoutesState, selectedHomeState, drawerOpenState, mobileViewState } from '../../recoil/atoms'
 
 function Search() {
   const classes = useStyles()
 
   const homes = useRecoilValue(homesState)
+  const mobileView = useRecoilValue(mobileViewState)
   const resetHomeDetails = useResetRecoilState(homeDetailsState)
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
 
@@ -49,7 +50,7 @@ function Search() {
       setSelectedHome(value)
       setDrawerOpen(true)
     }
-  }, [value, setSelectedHome, map, resetHomeDetails, resetHomeRoutes])
+  }, [value, setSelectedHome, map, resetHomeDetails, resetHomeRoutes, setDrawerOpen])
 
   // useEffect(() => {
   //   let active = true;
@@ -66,7 +67,7 @@ function Search() {
   // }, [inputValue])
 
   return (
-    <Card elevation={0}>
+    <Card elevation={mobileView ? 0 : 1}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />
