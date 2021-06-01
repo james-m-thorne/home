@@ -31,7 +31,7 @@ export const useStyles = makeStyles(() => ({
   mobileBoxDetails: {
     margin: 16,
     height: '100%', 
-    overflow: 'auto'
+    overflow: 'hidden'
   },
   search: {
     padding: 12,

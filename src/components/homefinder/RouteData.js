@@ -36,7 +36,7 @@ function RouteData() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography align={'center'} variant={'body2'}><b>Selected Routes</b></Typography>
+        <Typography align={'center'} variant={'body2'}><b>Trip Times</b></Typography>
       </Grid>
       {homeRoutes.map(person => getRouteData(person))}
     </Grid>

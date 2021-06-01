@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(() => ({
   card: {
-    height: 350
+    minHeight: 350
   },
   header: {
     paddingBottom: 0

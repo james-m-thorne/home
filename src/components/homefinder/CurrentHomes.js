@@ -66,7 +66,6 @@ function CurrentHomes() {
       if (!card) return {}
 
       const listingData = await getListingData(card.listing_id)
-      console.log(listingData)
       return {...card.property_details, open_homes: listingData.listing?.open_homes}
     }
 
