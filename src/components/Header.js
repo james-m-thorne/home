@@ -75,7 +75,7 @@ export default function Header() {
               {label}
             </Button>
           )}
-          {themeIconButton()}
+          {/* {themeIconButton()} */}
         </div>
       </Toolbar>
     )
@@ -122,7 +122,7 @@ export default function Header() {
           </div>
         </Drawer>
         <div>{logo}</div>
-        <div style={{marginLeft: 'auto'}}>{themeIconButton()}</div>
+        {/* <div style={{marginLeft: 'auto'}}>{themeIconButton()}</div> */}
       </Toolbar>
     )
   }

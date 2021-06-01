@@ -3,7 +3,7 @@ import { useRecoilValue, useRecoilState, useResetRecoilState, useSetRecoilState 
 import { Marker, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { homeIcon } from './Map.styles'
 import * as polyUtil from 'polyline-encoded'
-import { planRoute, getHomeData, getHomes } from '../../utils/requests'
+import { planRoute, getHomeData, getHomes, getListingData } from '../../utils/requests'
 import { homesState, peopleState, homeRoutesState, homeDetailsState, selectedHomeState, drawerOpenState, filterHomeState } from '../../recoil/atoms'
 
 function CurrentHomes() {
@@ -62,7 +62,12 @@ function CurrentHomes() {
 
     const findHomeDetails = async (selectedHome) => {
       const homeData = await getHomeData(selectedHome.url)
-      return homeData.card?.property_details
+      const card = homeData.card
+      if (!card) return {}
+
+      const listingData = await getListingData(card.listing_id)
+      console.log(listingData)
+      return {...card.property_details, open_homes: listingData.listing?.open_homes}
     }
 
     findHomeDetails(selectedHome).then(result => setHomeDetails({data: result, url: selectedHome.url}))

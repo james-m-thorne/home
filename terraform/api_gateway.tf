@@ -77,6 +77,19 @@ resource "aws_apigatewayv2_route" "api_route_search" {
   target = "integrations/${aws_apigatewayv2_integration.api_integration_search.id}"
 }
 
+resource "aws_apigatewayv2_integration" "api_integration_listing" {
+  api_id           = aws_apigatewayv2_api.api.id
+  integration_type = "HTTP_PROXY"
+  integration_uri  = "https://gateway.homes.co.nz/listing/{listingId}/detail"
+  integration_method = "GET"
+}
+
+resource "aws_apigatewayv2_route" "api_route_listing" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "GET /listing/{listingId}"
+  target = "integrations/${aws_apigatewayv2_integration.api_integration_listing.id}"
+}
+
 resource "aws_apigatewayv2_integration" "get_user_api_integration" {
   api_id           = aws_apigatewayv2_api.api.id
   integration_type = "AWS_PROXY"

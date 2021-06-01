@@ -53,3 +53,8 @@ export const searchHomes = async (filter) => {
   const url = `${API_URL}/search?Address=${filter}`
   return await makeRequest(url)
 }
+
+export const getListingData = async (listingId) => {
+  const url = `${API_URL}/listing/${listingId}`
+  return await makeRequest(url)
+}
