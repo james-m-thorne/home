@@ -12,3 +12,7 @@ spec:
         backend:
           serviceName: home-service
           servicePort: 8080
+      - path: /api
+        backend:
+          serviceName: hasura
+          servicePort: 80
