@@ -50,3 +50,30 @@ kubeadm init --pod-network-cidr=10.244.0.0/16
 kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
 kubectl taint node fedora node-role.kubernetes.io/master-
 ```
+
+## Helm installations
+
+```bash
+# Cert manager for ssl certificates
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.4.0 \
+  --set installCRDs=true
+
+# Used for DNS ssl validation
+helm install  \
+  external-dns stable/external-dns \
+  --namespace cert-manager \
+  --set aws.accessKey=XX \
+  --set aws.secretKey=XX \
+  --set aws.region=us-east-1 \
+  --set policy=upsert-only \
+  --set domainFilters={api.thorney.me}
+
+# Install NGINX ingress controller
+helm install \
+  ingress-nginx ingress-nginx/ingress-nginx \
+  -f nginx-values.yaml
+```
