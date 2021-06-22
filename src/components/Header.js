@@ -3,7 +3,6 @@ import {
   Toolbar,
   Typography,
   Button,
-  Switch,
   IconButton,
   Drawer,
   Link,
@@ -18,14 +17,14 @@ import React, { useState, useEffect } from "react"
 import { useRecoilState } from 'recoil'
 import { Link as RouterLink } from "react-router-dom"
 import { useStyles } from "./Header.styles"
-import { themeState, mobileViewState } from '../recoil/atoms'
+import { mobileViewState } from '../recoil/atoms'
 
 
 export default function Header() {
   const classes = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [mobileView, setMobileView] = useRecoilState(mobileViewState)
-  const [theme, setTheme] = useRecoilState(themeState)
+  // const [theme, setTheme] = useRecoilState(themeState)
 
   const headersData = [
     {
@@ -51,11 +50,11 @@ export default function Header() {
     </Typography>
   )
 
-  const themeIconButton = () => (
-    <Switch
-      onChange={() => setTheme(!theme)}
-    />
-  )
+  // const themeIconButton = () => (
+  //   <Switch
+  //     onChange={() => setTheme(!theme)}
+  //   />
+  // )
 
   const displayDesktop = () => {
     return (

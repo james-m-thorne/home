@@ -64,6 +64,16 @@ resource "aws_route53_record" "api" {
   records = [local.public_ip]
 }
 
+resource "aws_route53_record" "auth-cognito" {
+  name    = aws_cognito_user_pool_domain.cognito_domain.domain
+  type    = "A"
+  zone_id = aws_route53_zone.zone.zone_id
+  alias {
+    name                   = aws_cognito_user_pool_domain.cognito_domain.cloudfront_distribution_arn
+    zone_id                = aws_cloudfront_distribution.home_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
 
 resource "aws_cloudfront_distribution" "home_distribution" {
   origin {
