@@ -1,4 +1,7 @@
-node_modules/
+.yarn/
+.yarnrc.yml
+.pnp/
+.pnp.js
 .gibhub/
 kube/
 terraform/

@@ -1,9 +1,11 @@
 # build environment
 FROM node:14-alpine as build
 WORKDIR /app
+
+RUN yarn set version berry
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn install --production --network-timeout 100000
+RUN yarn install
 
 # add app
 COPY . ./
