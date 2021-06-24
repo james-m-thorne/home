@@ -28,6 +28,6 @@ kube/secrets.yaml
 terraform/.terraform/
 terraform/crash.log
 terraform/builds/
+terraform/*.tfstate
+terraform/secrets.auto.tfvars
 package/
-
-*.tfstate

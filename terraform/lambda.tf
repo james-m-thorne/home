@@ -31,4 +31,8 @@ module "lambda_sync_hasura_users" {
       source_arn = aws_cognito_user_pool.cognito_pool.arn
     }
   }
+
+  environment_variables = {
+    HASURA_ADMIN_SECRET = var.hasura_admin_secret
+  }
 }
