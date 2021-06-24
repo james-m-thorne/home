@@ -89,17 +89,3 @@ resource "aws_apigatewayv2_route" "api_route_listing" {
   route_key = "GET /listing/{listingId}"
   target = "integrations/${aws_apigatewayv2_integration.api_integration_listing.id}"
 }
-
-resource "aws_apigatewayv2_integration" "get_user_api_integration" {
-  api_id           = aws_apigatewayv2_api.api.id
-  integration_type = "AWS_PROXY"
-  description               = "Get user details Lambda"
-  integration_method        = "POST"
-  integration_uri           = module.get_user_lambda.lambda_function_invoke_arn
-}
-
-resource "aws_apigatewayv2_route" "get_user_api_route" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "GET /users"
-  target = "integrations/${aws_apigatewayv2_integration.get_user_api_integration.id}"
-}

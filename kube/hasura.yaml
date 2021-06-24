@@ -32,6 +32,8 @@ spec:
         ## enable debugging mode. It is recommended to disable this in production
         - name: HASURA_GRAPHQL_DEV_MODE
           value: "true"
+        - name: HASURA_GRAPHQL_JWT_SECRET
+          value: '{"type":"RS256", "jwk_url": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_3VX8Mxn6E/.well-known/jwks.json","claims_format": "stringified_json"}'
         - name: HASURA_GRAPHQL_ADMIN_SECRET
           valueFrom:
             secretKeyRef:

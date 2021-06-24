@@ -18,11 +18,7 @@ Amplify.configure({
 function App() {
   React.useEffect(() => {
     Auth.currentSession().then(res => {
-      let accessToken = res.getAccessToken()
-      let jwt = accessToken.getJwtToken()
-      //You can print them to see the full objects
-      console.log(`myAccessToken: ${JSON.stringify(accessToken)}`)
-      console.log(`myJwt: ${jwt}`)
+      console.log(res)
     })
   }, [])
 
