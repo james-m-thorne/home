@@ -9,8 +9,6 @@ create table users
         constraint users_pk
             primary key,
     email   citext                          not null
-        constraint users_email_key
-            unique
 );
 
 alter table users
@@ -109,15 +107,12 @@ create table user_shared_homes
 alter table user_shared_homes
     owner to "james-thorne";
 
-create table user_filters
+create table shared_home_filters
 (
     filter_id       bigserial not null
         constraint user_filters_pkey
             primary key,
-    user_id         uuid      not null
-        constraint user_filters_user_id_fkey
-            references users
-            on update restrict on delete restrict,
+    user_id         uuid      not null,
     min_price       integer   not null,
     max_price       integer   not null,
     min_bedrooms    integer   not null,
@@ -133,6 +128,6 @@ create table user_filters
     property_status text      not null
 );
 
-alter table user_filters
+alter table shared_home_filters
     owner to "james-thorne";
 

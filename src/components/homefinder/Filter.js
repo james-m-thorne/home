@@ -21,7 +21,7 @@ function Filter() {
 
   useEffect(() => {
     if (filterResult.data) {
-      const filterData = filterResult.data.user_filters[0]
+      const filterData = filterResult.data.shared_home_filters[0]
       setPrice([filterData.min_price / 1000000, filterData.max_price / 1000000])
       setBed([filterData.min_bedrooms, filterData.max_bedrooms])
       setBath([filterData.min_bathrooms, filterData.max_bathrooms])

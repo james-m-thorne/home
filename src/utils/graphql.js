@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_FILTERS = gql`
   query Filters {
-    user_filters {
+    shared_home_filters {
       max_bathrooms
       max_bedrooms
       max_carparks
@@ -16,7 +16,6 @@ export const GET_FILTERS = gql`
       min_land_area
       min_price
       property_status
-      name
     }
   }
 `
