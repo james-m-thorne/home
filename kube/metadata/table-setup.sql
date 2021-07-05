@@ -109,3 +109,30 @@ create table user_shared_homes
 alter table user_shared_homes
     owner to "james-thorne";
 
+create table user_filters
+(
+    filter_id       bigserial not null
+        constraint user_filters_pkey
+            primary key,
+    user_id         uuid      not null
+        constraint user_filters_user_id_fkey
+            references users
+            on update restrict on delete restrict,
+    min_price       integer   not null,
+    max_price       integer   not null,
+    min_bedrooms    integer   not null,
+    max_bedrooms    integer   not null,
+    min_bathrooms   integer   not null,
+    max_bathrooms   integer   not null,
+    min_carparks    integer   not null,
+    max_carparks    integer   not null,
+    min_land_area   integer   not null,
+    max_land_area   integer   not null,
+    min_floor_area  integer   not null,
+    max_floor_area  integer   not null,
+    property_status text      not null
+);
+
+alter table user_filters
+    owner to "james-thorne";
+
