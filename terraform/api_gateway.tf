@@ -89,3 +89,16 @@ resource "aws_apigatewayv2_route" "api_route_listing" {
   route_key = "GET /listing/{listingId}"
   target = "integrations/${aws_apigatewayv2_integration.api_integration_listing.id}"
 }
+
+resource "aws_apigatewayv2_integration" "api_integration_graphql" {
+  api_id           = aws_apigatewayv2_api.api.id
+  integration_type = "HTTP_PROXY"
+  integration_uri  = "https://api.thorney.me/v1/graphql"
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_route" "api_route_graphql" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "POST /graphql"
+  target = "integrations/${aws_apigatewayv2_integration.api_integration_graphql.id}"
+}
