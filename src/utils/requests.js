@@ -43,12 +43,12 @@ export const getHomes = async (encodedBounds, filterHomes, signal) => {
     for_sale: true,
     just_sold: false,
     off_market: false,
-    ...(filterHomes.bathMin > 0 && {num_bathrooms: filterHomes.bathMin}),
-    ...(filterHomes.bathMax < 5 && {num_bathrooms_max: filterHomes.bathMax}),
-    ...(filterHomes.bedMin > 0 && {num_bedrooms: filterHomes.bedMin}),
-    ...(filterHomes.bedMax < 5 && {num_bedrooms_max: filterHomes.bedMax}),
-    ...(filterHomes.priceMin > 0 && {sale_max: filterHomes.priceMin}),
-    sale_max: filterHomes.priceMax
+    ...(filterHomes.min_bathrooms > 0 && {num_bathrooms: filterHomes.min_bathrooms}),
+    ...(filterHomes.max_bathrooms < 5 && {num_bathrooms_max: filterHomes.max_bathrooms}),
+    ...(filterHomes.min_bedrooms > 0 && {num_bedrooms: filterHomes.min_bedrooms}),
+    ...(filterHomes.max_bedrooms < 5 && {num_bedrooms_max: filterHomes.max_bedrooms}),
+    ...(filterHomes.min_price > 0 && {sale_max: filterHomes.min_price}),
+    sale_max: filterHomes.max_price
   }
   return await makeRequest(url, {signal: signal, method: 'POST', body: JSON.stringify(body)})
 }

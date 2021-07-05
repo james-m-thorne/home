@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Header from './Header'
 import Map from './homefinder/Map'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { themeState, userDataState } from '../recoil/atoms'
+import { useRecoilValue } from 'recoil'
+import { themeState } from '../recoil/atoms'
 import { useStyles, lightTheme, darkTheme } from './Routes.styles'
 import { API_URL } from '../constants/constants'
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
@@ -37,18 +37,6 @@ const client = new ApolloClient({
 function Routes() {
   const classes = useStyles()
   const theme = useRecoilValue(themeState)
-  const setUserData = useSetRecoilState(userDataState)
-
-  useEffect(() => {
-    Auth.currentSession().then(res => {
-      const idToken = res.getIdToken()
-      const payload = idToken.decodePayload()
-      setUserData({
-        idToken: idToken.getJwtToken(),
-        email: payload['cognito:username']
-      })
-    })
-  }, [setUserData])
 
   return (
     <ApolloProvider client={client}>
