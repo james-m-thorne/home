@@ -1,7 +1,16 @@
 import { API_URL } from '../constants/constants'
 
 export const makeRequest = async (url, options={}) => {
-  const response = await fetch(url, options)
+  let response = {}
+  try {
+    response = await fetch(url, options)
+  } catch(err) {
+
+    if (!(err instanceof DOMException)) {
+      console.error(err)
+    }
+  }
+
   if (response.ok) {
     return response.json()
   }
@@ -24,7 +33,7 @@ export const planRoute = async (from, to) => {
   return { duration, legs }
 }
 
-export const getHomes = async (encodedBounds, filterHomes) => {
+export const getHomes = async (encodedBounds, filterHomes, signal) => {
   const url = `${API_URL}/map`
   const body = {
     polylines: [encodedBounds],
@@ -41,7 +50,7 @@ export const getHomes = async (encodedBounds, filterHomes) => {
     ...(filterHomes.priceMin > 0 && {sale_max: filterHomes.priceMin}),
     sale_max: filterHomes.priceMax
   }
-  return await makeRequest(url, {method: 'POST', body: JSON.stringify(body)})
+  return await makeRequest(url, {signal: signal, method: 'POST', body: JSON.stringify(body)})
 }
 
 export const getHomeData = async (homeUrl) => {

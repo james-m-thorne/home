@@ -10,7 +10,6 @@ function CurrentHomes() {
   const map = useMap()
   const encode = (bounds) => polyUtil.encode([bounds.getNorthWest(), bounds.getSouthWest(), bounds.getSouthEast(), bounds.getNorthEast(), bounds.getNorthWest()])
 
-
   const setDrawerOpen = useSetRecoilState(drawerOpenState)
   const resetHomeDetails = useResetRecoilState(homeDetailsState)
   const setHomeDetails = useSetRecoilState(homeDetailsState)
@@ -73,11 +72,13 @@ function CurrentHomes() {
   }, [selectedHome, setHomeDetails])
 
   useEffect(() => {
-    getHomes(encodedBounds, filterHomes).then(fetchedHomes => {
+    const controller = new AbortController()
+    getHomes(encodedBounds, filterHomes, controller.signal).then(fetchedHomes => {
       if (fetchedHomes?.map_items) {
         setHomes(fetchedHomes?.map_items)
       }
     })
+    return () => controller.abort()
   }, [encodedBounds, setHomes, filterHomes])
 
   const getMarkers = () => (

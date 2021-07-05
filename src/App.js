@@ -2,7 +2,7 @@ import './index.css'
 import React from 'react'
 import Routes from './components/Routes'
 import { RecoilRoot } from 'recoil'
-import Amplify, { Auth } from 'aws-amplify'
+import Amplify from 'aws-amplify'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 
 Amplify.configure({
@@ -16,12 +16,6 @@ Amplify.configure({
 })
 
 function App() {
-  React.useEffect(() => {
-    Auth.currentSession().then(res => {
-      console.log(res)
-    })
-  }, [])
-
   return (
     <RecoilRoot>
       <Routes/>

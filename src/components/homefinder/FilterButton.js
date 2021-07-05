@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import Button from '@material-ui/core/Button'
 import Slider from '@material-ui/core/Slider'
@@ -6,13 +6,17 @@ import Popover from '@material-ui/core/Popover'
 import { mobileViewState } from '../../recoil/atoms'
 import { useStyles } from './FilterButton.styles'
 
-export default function FilterButton({ icon, defaultValue, setFilter, min, max, step, suffix='' }) {  
+export default function FilterButton({ icon, defaultValue, setFilter, min, max, step, suffix='' }) {
   max = max + step
 
   const classes = useStyles()
   const mobileView = useRecoilValue(mobileViewState)
   const [anchorEl, setAnchorEl] = useState(null)
-  const [value, setValue] = useState(defaultValue)
+  const [value, setValue] = useState([defaultValue[0] ? defaultValue[0] : min, defaultValue[1] ? defaultValue[1] : max])
+
+  useEffect(() => {
+    setValue([defaultValue[0] ? defaultValue[0] : min, defaultValue[1] ? defaultValue[1] : max])
+  }, [defaultValue, setValue, min, max])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
