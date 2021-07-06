@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerBleeding = 56
+const drawerBleeding = 116
 
 export const useStyles = makeStyles(() => ({
   mobileBoxOuter: {
@@ -20,7 +20,7 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: '#e0e0e0',
     borderRadius: '3px',
     position: 'absolute',
-    top: 8,
+    top: 6,
     left: 'calc(50% - 15px)',
   },
   mobileSwipe: {
@@ -29,9 +29,9 @@ export const useStyles = makeStyles(() => ({
     position: 'absolute',
   },
   mobileBoxDetails: {
-    margin: 16,
-    height: '100%', 
-    overflow: 'hidden'
+    height: '100%',
+    maxHeight: `calc(80vh - ${drawerBleeding}px)`,
+    overflow: 'scroll'
   },
   search: {
     padding: 12,

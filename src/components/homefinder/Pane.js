@@ -36,18 +36,18 @@ function Pane() {
         className={classes.mobileBoxOuter}
         onTouchMove={() => toggleDrawerOpen(true)}
       >
-        <Box 
-          className={classes.mobileSwipe} 
-          onClick={() => toggleDrawerOpen(true)} 
+        <Box
+          className={classes.mobileSwipe}
+          onClick={() => toggleDrawerOpen(true)}
         >
           <Box className={classes.mobileChip}/>
         </Box>
         <Box className={classes.search}>
+          <Filter />
           <Search />
         </Box>
       </Box>
       <Box className={classes.mobileBoxDetails}>
-        <Filter />
         {selectedHome.url && <HomeDetails />}
       </Box>
     </SwipeableDrawer>
