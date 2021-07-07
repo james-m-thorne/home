@@ -29,7 +29,12 @@ export const planRoute = async (from, to) => {
 
   const firstRoute = itineraries[0]
   let { duration, legs } = firstRoute
-  legs = legs.map(leg => ({duration: leg?.duration, geometry: leg?.legGeometry?.points}))
+  legs = legs.map(leg => ({
+    duration: leg?.duration,
+    geometry: leg?.legGeometry?.points,
+    distance: leg?.distance,
+    mode: leg?.mode
+  }))
   return { duration, legs }
 }
 

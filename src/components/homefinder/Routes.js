@@ -40,24 +40,22 @@ function Routes() {
     findRouteDetails(selectedHome).then(result => setHomeRoutes(result))
   }, [selectedHome, setHomeRoutes, people])
 
-  const getLines = () => (
-    homeRoutes.map(person => (
-      person.locations.map(location => {
-        const legs = location?.legs
-        if (legs) {
-          return location.legs.map(leg => {
-            const geometry = polyUtil.decode(leg.geometry)
-            return <Polyline key={leg.geometry} positions={geometry} color={person.color} />
-          })
-        }
-        return null
-      })
-    ))
-  )
-
   return (
     <div>
-      {getLines()}
+      {homeRoutes.map(person => (
+        person.locations.map(location => {
+          const legs = location?.legs
+          if (legs) {
+            return location.legs.map(leg => {
+              const geometry = polyUtil.decode(leg.geometry)
+              let options = {color: person.color}
+              if (leg.mode === 'WALK') options['dashArray'] = '5 10'
+              return <Polyline key={leg.geometry} positions={geometry} pathOptions={options} />
+            })
+          }
+          return null
+        })
+      ))}
     </div>
   )
 }

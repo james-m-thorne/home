@@ -49,27 +49,23 @@ function CurrentHomes() {
     return () => controller.abort()
   }, [encodedBounds, setHomes, filterHomes])
 
-  const getMarkers = () => (
-    homes.map(home =>
-      <Marker 
-        key={home.id} 
-        position={[home.point.lat, home.point.long]} 
-        icon={homeIcon}
-        eventHandlers={{
-          click: () => {
-            resetHomeDetails()
-            resetHomeRoutes()
-            setSelectedHome(home)
-            setDrawerOpen(true)
-          }
-        }}
-      />
-    )
-  )
-
   return (
     <div>
-      {getMarkers()}
+      {homes.map(home =>
+        <Marker
+          key={home.id}
+          position={[home.point.lat, home.point.long]}
+          icon={homeIcon}
+          eventHandlers={{
+            click: () => {
+              resetHomeDetails()
+              resetHomeRoutes()
+              setSelectedHome(home)
+              setDrawerOpen(true)
+            }
+          }}
+        />
+      )}
     </div>
   )
 }

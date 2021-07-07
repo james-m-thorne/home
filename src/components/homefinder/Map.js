@@ -6,7 +6,7 @@ import CurrentHomes from './CurrentHomes'
 import Routes from './Routes'
 import Pane from './Pane'
 import { useQuery } from '@apollo/client'
-import { GET_FILTERS } from '../../utils/graphql'
+import { GET_SHARED_HOME_INFO } from '../../utils/graphql'
 import { useSetRecoilState } from 'recoil'
 import { filterHomeState } from '../../recoil/atoms'
 
@@ -15,16 +15,16 @@ function Map() {
   const aucklandLatLong = { lat: -36.8509, lng: 174.7645 }
 
   const setFilterHomes = useSetRecoilState(filterHomeState)
-  const filterResult = useQuery(GET_FILTERS)
+  const sharedHomeInfo = useQuery(GET_SHARED_HOME_INFO)
 
   useEffect(() => {
-    if (filterResult.data) {
-      const filterData = filterResult.data.shared_home_filters[0]
+    if (sharedHomeInfo.data) {
+      const filterData = sharedHomeInfo.data.shared_home_filters[0]
       setFilterHomes(filterData)
-    } else if (filterResult.error) {
-      console.error(filterResult.error)
+    } else if (sharedHomeInfo.error) {
+      console.error(sharedHomeInfo.error)
     }
-  }, [filterResult, setFilterHomes])
+  }, [sharedHomeInfo, setFilterHomes])
   
   return (
     <div className={classes.maxHeight}>
