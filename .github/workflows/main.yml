@@ -53,12 +53,13 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
+          version: v1.21.1
           args: rollout restart deployment home-deployment
 
       - name: Verify deployment
         uses: steebchen/kubectl@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          KUBECTL_VERSION: "1.19"
         with:
+          version: v1.21.1
           args: rollout status deployment home-deployment
