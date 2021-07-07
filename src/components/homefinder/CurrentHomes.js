@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilValue, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { Marker, useMap, useMapEvents } from 'react-leaflet'
-import { homeIcon } from './Map.styles'
+import { CircleMarker, useMap, useMapEvents } from 'react-leaflet'
 import * as polyUtil from 'polyline-encoded'
 import { getHomeData, getHomes, getListingData } from '../../utils/requests'
 import {
@@ -11,7 +10,9 @@ import {
   selectedHomeState,
   drawerOpenState,
   filterHomeState,
-  sharedHomeState, userDataState
+  sharedHomeState,
+  userDataState,
+  viewedPropertiesState
 } from '../../recoil/atoms'
 import { useMutation } from '@apollo/client'
 import { MUTATE_SHARED_HOME_DATA } from '../../utils/graphql'
@@ -27,6 +28,7 @@ function CurrentHomes() {
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
   const [selectedHome, setSelectedHome] = useRecoilState(selectedHomeState)
 
+  const [viewedProperties, setViewedProperties] = useRecoilState(viewedPropertiesState)
   const sharedHome = useRecoilValue(sharedHomeState)
   const userData = useRecoilValue(userDataState)
   const filterHomes = useRecoilValue(filterHomeState)
@@ -36,6 +38,24 @@ function CurrentHomes() {
   useMapEvents({
     moveend: () => setEncodedBounds(encode(map.getBounds()))
   })
+
+  const clickHome = (home) => {
+    resetHomeDetails()
+    resetHomeRoutes()
+    setSelectedHome(home)
+    setViewedProperties([...viewedProperties, home.id])
+    setDrawerOpen(true)
+    mutateSharedHomeData({
+      variables: {
+        object: {
+          property_id: home.id,
+          data_type: 'viewed',
+          shared_home_id: sharedHome.shared_home_id,
+          user_id: userData.user_id
+        }
+      }
+    })
+  }
 
   useEffect(() => {
     if (!selectedHome.url) return
@@ -65,28 +85,16 @@ function CurrentHomes() {
   return (
     <div>
       {homes.map(home =>
-        <Marker
+        <CircleMarker
           key={home.id}
-          position={[home.point.lat, home.point.long]}
-          icon={homeIcon}
-          eventHandlers={{
-            click: () => {
-              resetHomeDetails()
-              resetHomeRoutes()
-              setSelectedHome(home)
-              setDrawerOpen(true)
-              mutateSharedHomeData({
-                variables: {
-                  object: {
-                    property_id: home.id,
-                    data_type: 'viewed',
-                    shared_home_id: sharedHome.shared_home_id,
-                    user_id: userData.user_id
-                  }
-                }
-              })
-            }
+          pathOptions={{
+            radius: 6,
+            opacity: 0,
+            fillOpacity: 0.7,
+            color: viewedProperties.includes(home.id) ? 'blue' : 'black'
           }}
+          center={[home.point.lat, home.point.long]}
+          eventHandlers={{click: () => clickHome(home)}}
         />
       )}
     </div>

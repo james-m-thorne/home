@@ -63,6 +63,11 @@ export const sharedHomeState = atom({
   },
 })
 
+export const viewedPropertiesState = atom({
+  key: 'viewedPropertiesState',
+  default: [],
+})
+
 export const userDataState = atom({
   key: 'userDataState',
   default: {

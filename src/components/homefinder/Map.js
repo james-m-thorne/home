@@ -8,12 +8,13 @@ import Pane from './Pane'
 import { useQuery } from '@apollo/client'
 import { GET_SHARED_HOME_INFO } from '../../utils/graphql'
 import { useSetRecoilState } from 'recoil'
-import { filterHomeState, sharedHomeState, userDataState } from '../../recoil/atoms'
+import { filterHomeState, sharedHomeState, userDataState, viewedPropertiesState } from '../../recoil/atoms'
 
 function Map() {
   const classes = useStyles()
   const aucklandLatLong = { lat: -36.8509, lng: 174.7645 }
 
+  const setViewedPropertiesState = useSetRecoilState(viewedPropertiesState)
   const setFilterHomes = useSetRecoilState(filterHomeState)
   const setSharedHome = useSetRecoilState(sharedHomeState)
   const setUserData = useSetRecoilState(userDataState)
@@ -24,10 +25,13 @@ function Map() {
       setFilterHomes(sharedHomeInfo.data.shared_home_filters[0])
       setSharedHome(sharedHomeInfo.data.shared_homes[0])
       setUserData(sharedHomeInfo.data.users[0])
+
+      const viewedProperties = sharedHomeInfo.data.shared_home_data.map(data => data.property_id)
+      setViewedPropertiesState(viewedProperties)
     } else if (sharedHomeInfo.error) {
       console.error(sharedHomeInfo.error)
     }
-  }, [sharedHomeInfo, setFilterHomes, setSharedHome, setUserData])
+  }, [sharedHomeInfo, setFilterHomes, setSharedHome, setUserData, setViewedPropertiesState])
   
   return (
     <div className={classes.maxHeight}>
