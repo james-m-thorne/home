@@ -40,7 +40,7 @@ export const useStyles = makeStyles(() => ({
     zIndex: 1000,
     position: 'absolute',
     margin: 20,
-    width: 300,
+    width: 400,
     display: 'grid',
     gridGap: 20
   },

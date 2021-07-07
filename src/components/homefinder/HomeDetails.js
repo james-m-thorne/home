@@ -3,7 +3,6 @@ import { useRecoilValue, useResetRecoilState } from 'recoil'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
 import CloseIcon from '@material-ui/icons/Close'
@@ -12,6 +11,7 @@ import { mobileViewState, homeDetailsState, selectedHomeState } from '../../reco
 import HomeData from './HomeData'
 import RouteData from './RouteData'
 import { useStyles } from './HomeDetails.styles'
+import HomeImages from './HomeImages'
 
 function HomeDetails() {
   const classes = useStyles()
@@ -28,13 +28,7 @@ function HomeDetails() {
           </IconButton>
         </Box>
       }
-      {homeDetails.data?.cover_image_url &&
-        <CardMedia
-          component="img"
-          src={homeDetails.data.cover_image_url}
-          title="home-cover-image"
-        />
-      }
+      <HomeImages images={homeDetails.data?.listing_images}/>
       <CardContent>
         <HomeData data={homeDetails.data} />
         <RouteData />

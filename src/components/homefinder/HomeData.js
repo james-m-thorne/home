@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { useStyles } from './HomeDetails.styles'
-
 import HomeIcon from '@material-ui/icons/Home'
 import BathtubIcon from '@material-ui/icons/Bathtub'
 import HotelIcon from '@material-ui/icons/Hotel'
