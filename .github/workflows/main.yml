@@ -53,11 +53,11 @@ jobs:
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           version: v1.21.1
-          args: rollout restart deployment home-deployment
+          command: rollout restart deployment home-deployment
 
       - name: Verify deployment
         uses: steebchen/kubectl@master
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           version: v1.21.1
-          args: rollout status deployment home-deployment
+          command: rollout status deployment home-deployment
