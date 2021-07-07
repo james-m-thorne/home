@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import { useStyles } from './Map.styles'
 import CurrentHomes from './CurrentHomes'
+import Routes from './Routes'
 import Pane from './Pane'
 import { useQuery } from '@apollo/client'
 import { GET_FILTERS } from '../../utils/graphql'
@@ -33,6 +34,7 @@ function Map() {
         />
         <Pane />
         <CurrentHomes />
+        <Routes />
         <ZoomControl position={'topright'} />
       </MapContainer>
     </div>
