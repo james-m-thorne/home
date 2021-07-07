@@ -49,7 +49,7 @@ function Routes() {
             return location.legs.map(leg => {
               const geometry = polyUtil.decode(leg.geometry)
               let options = {color: person.color}
-              if (leg.mode === 'WALK') options['dashArray'] = '5 10'
+              if (leg.mode === 'WALK') options['dashArray'] = '2 5'
               return <Polyline key={leg.geometry} positions={geometry} pathOptions={options} />
             })
           }
