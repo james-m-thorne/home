@@ -66,7 +66,7 @@ export const sharedHomeState = atom({
 export const userDataState = atom({
   key: 'userDataState',
   default: {
-    idToken: '',
+    user_id: '',
     email: ''
   }
 })
