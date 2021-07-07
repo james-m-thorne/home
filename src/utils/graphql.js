@@ -22,16 +22,22 @@ export const GET_SHARED_HOME_INFO = gql`
       max_bathrooms
       max_bedrooms
       max_carparks
-      max_floor_area
-      max_land_area
       max_price
       min_bathrooms
       min_bedrooms
       min_carparks
-      min_floor_area
-      min_land_area
       min_price
-      property_status
+    }
+  }
+`
+
+export const MUTATE_FILTER = gql`
+  mutation MyMutation($shared_home_id: uuid, $set: shared_home_filters_set_input) {
+    update_shared_home_filters(
+      where: {shared_home: {user_shared_homes: {shared_home_id: {_eq: $shared_home_id}}}}, 
+      _set: $set
+    ) {
+      affected_rows
     }
   }
 `

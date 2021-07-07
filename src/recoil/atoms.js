@@ -55,6 +55,14 @@ export const filterHomeState = atom({
   },
 })
 
+export const sharedHomeState = atom({
+  key: 'sharedHomeState',
+  default: {
+    shared_home_id: '',
+    name: ''
+  },
+})
+
 export const userDataState = atom({
   key: 'userDataState',
   default: {
