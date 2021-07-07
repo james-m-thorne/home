@@ -42,11 +42,11 @@ jobs:
           tags: jamesmthorne/home:latest
 
       - name: Update Kubernetes YAML
-        uses: steebchen/kubectl@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: steebchen/kubectl@v2.0.0
         with:
-          args: apply -f ./kube
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          version: v1.21.1
+          command: apply -f ./kube
     
       - name: Deploy to cluster
         uses: steebchen/kubectl@v2.0.0
