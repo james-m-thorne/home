@@ -12,7 +12,8 @@ import {
   filterHomeState,
   sharedHomeState,
   userDataState,
-  viewedPropertiesState
+  viewedPropertiesState,
+  loadingState
 } from '../../recoil/atoms'
 import { useMutation } from '@apollo/client'
 import { MUTATE_SHARED_HOME_DATA } from '../../utils/graphql'
@@ -23,6 +24,7 @@ function CurrentHomes() {
   const encode = (bounds) => polyUtil.encode([bounds.getNorthWest(), bounds.getSouthWest(), bounds.getSouthEast(), bounds.getNorthEast(), bounds.getNorthWest()])
 
   const setDrawerOpen = useSetRecoilState(drawerOpenState)
+  const setLoading = useSetRecoilState(loadingState)
   const resetHomeDetails = useResetRecoilState(homeDetailsState)
   const setHomeDetails = useSetRecoilState(homeDetailsState)
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
@@ -74,13 +76,18 @@ function CurrentHomes() {
 
   useEffect(() => {
     const controller = new AbortController()
-    getHomes(encodedBounds, filterHomes, controller.signal).then(fetchedHomes => {
-      if (fetchedHomes?.map_items) {
-        setHomes(fetchedHomes?.map_items)
-      }
-    })
+    setLoading(true)
+    getHomes(encodedBounds, filterHomes, controller.signal)
+      .then(fetchedHomes => {
+        if (fetchedHomes?.map_items) {
+          setHomes(fetchedHomes?.map_items)
+          setLoading(false)
+        }
+      })
+      .catch(() => setLoading(false))
+
     return () => controller.abort()
-  }, [encodedBounds, setHomes, filterHomes])
+  }, [encodedBounds, setHomes, filterHomes, setLoading])
 
   return (
     <div>

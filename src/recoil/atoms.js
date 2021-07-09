@@ -75,3 +75,8 @@ export const userDataState = atom({
     email: ''
   }
 })
+
+export const loadingState = atom({
+  key: 'loadingState',
+  default: false
+})

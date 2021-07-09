@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client'
 import { GET_SHARED_HOME_INFO } from '../../utils/graphql'
 import { useSetRecoilState } from 'recoil'
 import { filterHomeState, sharedHomeState, userDataState, viewedPropertiesState } from '../../recoil/atoms'
+import Loader from './Loader'
 
 function Map() {
   const classes = useStyles()
@@ -40,6 +41,7 @@ function Map() {
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
         />
         <Pane />
+        <Loader />
         <CurrentHomes />
         <Routes />
         <ZoomControl position={'topright'} />
