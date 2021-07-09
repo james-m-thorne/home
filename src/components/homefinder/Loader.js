@@ -3,8 +3,10 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Card } from '@material-ui/core'
 import { useRecoilValue } from 'recoil'
 import { loadingState } from '../../recoil/atoms'
+import { useStyles } from './Loader.styles'
 
 function Loader() {
+  const classes = useStyles()
   const loading = useRecoilValue(loadingState)
 
   if (!loading) {
@@ -12,8 +14,8 @@ function Loader() {
   }
 
   return (
-    <div style={{display: 'flex', alignItems: 'top', justifyContent: 'center', zIndex: 1000, position: 'absolute', width: '100%'}}>
-      <Card style={{marginTop: 20, width: 60, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div className={classes.loader}>
+      <Card className={classes.loaderCard}>
         <CircularProgress size={30}/>
       </Card>
     </div>
