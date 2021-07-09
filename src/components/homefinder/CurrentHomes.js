@@ -12,7 +12,7 @@ import {
   filterHomeState,
   sharedHomeState,
   userDataState,
-  viewedPropertiesState,
+  propertyDataState,
   loadingState
 } from '../../recoil/atoms'
 import { useMutation } from '@apollo/client'
@@ -30,7 +30,7 @@ function CurrentHomes() {
   const resetHomeRoutes = useResetRecoilState(homeRoutesState)
   const [selectedHome, setSelectedHome] = useRecoilState(selectedHomeState)
 
-  const [viewedProperties, setViewedProperties] = useRecoilState(viewedPropertiesState)
+  const [propertyData, setPropertyData] = useRecoilState(propertyDataState)
   const sharedHome = useRecoilValue(sharedHomeState)
   const userData = useRecoilValue(userDataState)
   const filterHomes = useRecoilValue(filterHomeState)
@@ -45,7 +45,7 @@ function CurrentHomes() {
     resetHomeDetails()
     resetHomeRoutes()
     setSelectedHome(home)
-    setViewedProperties([...viewedProperties, home.id])
+    setPropertyData({...propertyData, viewed: [...propertyData.viewed, home.id]})
     setDrawerOpen(true)
     mutateSharedHomeData({
       variables: {
@@ -98,7 +98,7 @@ function CurrentHomes() {
             radius: 6,
             opacity: 0,
             fillOpacity: 0.7,
-            color: viewedProperties.includes(home.id) ? 'blue' : 'black'
+            color: propertyData.favourite.includes(home.id) ? 'red' : (propertyData.viewed.includes(home.id) ? 'blue' : 'black')
           }}
           center={[home.point.lat, home.point.long]}
           eventHandlers={{click: () => clickHome(home)}}

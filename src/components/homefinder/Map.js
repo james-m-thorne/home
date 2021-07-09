@@ -8,14 +8,14 @@ import Pane from './Pane'
 import { useQuery } from '@apollo/client'
 import { GET_SHARED_HOME_INFO } from '../../utils/graphql'
 import { useSetRecoilState } from 'recoil'
-import { filterHomeState, sharedHomeState, userDataState, viewedPropertiesState } from '../../recoil/atoms'
+import { filterHomeState, sharedHomeState, userDataState, propertyDataState } from '../../recoil/atoms'
 import Loader from './Loader'
 
 function Map() {
   const classes = useStyles()
   const aucklandLatLong = { lat: -36.8509, lng: 174.7645 }
 
-  const setViewedPropertiesState = useSetRecoilState(viewedPropertiesState)
+  const setPropertyData = useSetRecoilState(propertyDataState)
   const setFilterHomes = useSetRecoilState(filterHomeState)
   const setSharedHome = useSetRecoilState(sharedHomeState)
   const setUserData = useSetRecoilState(userDataState)
@@ -27,19 +27,18 @@ function Map() {
       setSharedHome(sharedHomeInfo.data.shared_homes[0])
       setUserData(sharedHomeInfo.data.users[0])
 
-      const viewedProperties = sharedHomeInfo.data.shared_home_data.map(data => data.property_id)
-      setViewedPropertiesState(viewedProperties)
+      const viewedProperties = sharedHomeInfo.data.shared_home_data.filter(data => data.data_type === 'viewed').map(data => data.property_id)
+      const favouriteProperties = sharedHomeInfo.data.shared_home_data.filter(data => data.data_type === 'favourite').map(data => data.property_id)
+      setPropertyData({viewed: viewedProperties, favourite: favouriteProperties})
     } else if (sharedHomeInfo.error) {
       console.error(sharedHomeInfo.error)
     }
-  }, [sharedHomeInfo, setFilterHomes, setSharedHome, setUserData, setViewedPropertiesState])
+  }, [sharedHomeInfo, setFilterHomes, setSharedHome, setUserData, setPropertyData])
   
   return (
     <div className={classes.maxHeight}>
       <MapContainer center={aucklandLatLong} zoom={13} scrollWheelZoom={true} style={{height: '100%'}} zoomControl={false}>
-        <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-        />
+        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
         <Pane />
         <Loader />
         <CurrentHomes />

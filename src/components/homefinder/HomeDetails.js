@@ -12,6 +12,7 @@ import HomeData from './HomeData'
 import RouteData from './RouteData'
 import { useStyles } from './HomeDetails.styles'
 import HomeImages from './HomeImages'
+import HomeActions from './HomeActions'
 
 function HomeDetails() {
   const classes = useStyles()
@@ -30,6 +31,7 @@ function HomeDetails() {
       }
       <HomeImages images={homeDetails.data?.listing_images}/>
       <CardContent>
+        <HomeActions />
         <HomeData data={homeDetails.data} />
         <RouteData />
       </CardContent>
