@@ -23,7 +23,6 @@ import { mobileViewState } from '../recoil/atoms'
 export default function Header() {
   const classes = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [mobileView, setMobileView] = useRecoilState(mobileViewState)
   // const [theme, setTheme] = useRecoilState(themeState)
 
   const headersData = [
@@ -38,11 +37,6 @@ export default function Header() {
       href: "/contact",
     },
   ]
-
-  useEffect(() => {
-    setMobileView(window.innerWidth < 500)
-    window.addEventListener("resize", () => setMobileView(window.innerWidth < 500))
-  }, [setMobileView])
 
   const logo = (
     <Typography variant="h6" component="h1" className={classes.logo}>

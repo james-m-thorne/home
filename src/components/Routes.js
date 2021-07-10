@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Map from './homefinder/Map'
-import { useRecoilValue } from 'recoil'
-import { themeState } from '../recoil/atoms'
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { mobileViewState, themeState } from '../recoil/atoms'
 import { useStyles, lightTheme, darkTheme } from './Routes.styles'
 import { API_URL } from '../constants/constants'
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
@@ -37,6 +37,12 @@ const client = new ApolloClient({
 function Routes() {
   const classes = useStyles()
   const theme = useRecoilValue(themeState)
+  const setMobileView = useSetRecoilState(mobileViewState)
+
+  useEffect(() => {
+    setMobileView(window.innerWidth < 500)
+    window.addEventListener("resize", () => setMobileView(window.innerWidth < 500))
+  }, [setMobileView])
 
   return (
     <ApolloProvider client={client}>
