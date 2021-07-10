@@ -1,7 +1,6 @@
 import React from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import Header from './Header'
 import Map from './homefinder/Map'
 import { useRecoilValue } from 'recoil'
 import { themeState } from '../recoil/atoms'
@@ -44,7 +43,6 @@ function Routes() {
       <ThemeProvider theme={createMuiTheme(theme ? darkTheme : lightTheme)}>
         <Router>
           <div className={classes.root}>
-            <Header />
             <main className={classes.body}>
               <Switch>
                 <Route path='/'>
