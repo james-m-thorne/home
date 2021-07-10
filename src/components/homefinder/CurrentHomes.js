@@ -16,11 +16,11 @@ import {
   loadingState
 } from '../../recoil/atoms'
 import { useMutation } from '@apollo/client'
-import { MUTATE_SHARED_HOME_DATA } from '../../utils/graphql'
+import { INSERT_SHARED_HOME_DATA } from '../../utils/graphql'
 
 function CurrentHomes() {
   const map = useMap()
-  const [mutateSharedHomeData, ] = useMutation(MUTATE_SHARED_HOME_DATA)
+  const [insertSharedHomeData, ] = useMutation(INSERT_SHARED_HOME_DATA)
   const encode = (bounds) => polyUtil.encode([bounds.getNorthWest(), bounds.getSouthWest(), bounds.getSouthEast(), bounds.getNorthEast(), bounds.getNorthWest()])
 
   const setDrawerOpen = useSetRecoilState(drawerOpenState)
@@ -45,18 +45,20 @@ function CurrentHomes() {
     resetHomeDetails()
     resetHomeRoutes()
     setSelectedHome(home)
-    setPropertyData({...propertyData, viewed: [...propertyData.viewed, home.id]})
     setDrawerOpen(true)
-    mutateSharedHomeData({
-      variables: {
-        object: {
-          property_id: home.id,
-          data_type: 'viewed',
-          shared_home_id: sharedHome.shared_home_id,
-          user_id: userData.user_id
+    if (!propertyData.favourite.includes(home.id)) {
+      setPropertyData({...propertyData, viewed: [...propertyData.viewed, home.id]})
+      insertSharedHomeData({
+        variables: {
+          object: {
+            property_id: home.id,
+            data_type: 'viewed',
+            shared_home_id: sharedHome.shared_home_id,
+            user_id: userData.user_id
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   useEffect(() => {

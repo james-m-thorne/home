@@ -42,9 +42,17 @@ export const MUTATE_FILTER = gql`
   }
 `
 
-export const MUTATE_SHARED_HOME_DATA = gql`
+export const INSERT_SHARED_HOME_DATA = gql`
   mutation MyMutation($object: shared_home_data_insert_input!) {
     insert_shared_home_data_one(object: $object, on_conflict: {constraint: shared_home_data_property_id_shared_home_id_user_id_key, update_columns: data_type}) {
+      property_id
+    }
+  }
+`
+
+export const DELETE_SHARED_HOME_DATA = gql`
+  mutation MyMutation($object: shared_home_data_bool_exp!) {
+    delete_shared_home_data(where: $object) {
       property_id
     }
   }
