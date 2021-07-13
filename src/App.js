@@ -2,8 +2,11 @@ import './index.css'
 import React from 'react'
 import Routes from './components/Routes'
 import { RecoilRoot } from 'recoil'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import { withAuthenticator } from '@aws-amplify/ui-react'
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { API_URL } from './constants/constants'
+import { setContext } from '@apollo/client/link/context'
 
 Amplify.configure({
   Auth: {
@@ -15,10 +18,35 @@ Amplify.configure({
   }
 })
 
+const httpLink = createHttpLink({
+  uri: `${API_URL}/graphql`,
+})
+
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = (await Auth.currentSession()).getIdToken().getJwtToken()
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache({
+    addTypename: false
+  })
+})
+
 function App() {
   return (
     <RecoilRoot>
-      <Routes/>
+      <ApolloProvider client={client}>
+        <Routes/>
+      </ApolloProvider>
     </RecoilRoot>
   )
 }
