@@ -51,6 +51,19 @@ kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
 kubectl taint node fedora node-role.kubernetes.io/master-
 ```
 
+```bash
+# Add api.thorney.me to kube certificate
+# https://blog.scottlowe.org/2019/07/30/adding-a-name-to-kubernetes-api-server-certificate/
+
+kubectl -n kube-system get configmap kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' > kubeadm.yaml
+# ADD certSANs to kubeadm.yaml
+mv /etc/kubernetes/pki/apiserver.{crt,key} ~
+kubeadm init phase certs apiserver --config kubeadm.yaml
+
+# Restart kube api server
+docker kill $(docker ps | grep kube-apiserver | grep -v pause)
+```
+
 ## Helm installations
 
 ```bash
