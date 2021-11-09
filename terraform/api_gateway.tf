@@ -3,8 +3,10 @@ resource "aws_apigatewayv2_api" "api" {
   description     = "API to proxy to external services"
   protocol_type   = "HTTP"
   cors_configuration {
-    allow_origins = ["*"]
+    allow_origins = ["https://www.thorney.me", "https://thorney.me", "http://api.192.168.3.254.nip.io:30000"]
     allow_methods = ["GET", "POST",]
+    allow_credentials = true
+    allow_headers = ["authorization", "content-type"]
   }
 }
 
