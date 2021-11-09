@@ -12,7 +12,6 @@ spec:
       app: hasura
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: hasura
     spec:
@@ -44,7 +43,13 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-        resources: {}
+        resources: 
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
 ---
 apiVersion: v1
 kind: Service
