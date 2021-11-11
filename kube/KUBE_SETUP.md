@@ -76,7 +76,7 @@ helm install \
   --set installCRDs=true
 
 # Used for DNS ssl validation
-helm install  \
+helm upgrade --install  \
   external-dns stable/external-dns \
   --namespace cert-manager \
   --set aws.accessKey=XX \
