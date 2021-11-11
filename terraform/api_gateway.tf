@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_api" "api" {
   description     = "API to proxy to external services"
   protocol_type   = "HTTP"
   cors_configuration {
-    allow_origins = ["https://www.thorney.me", "https://thorney.me", "http://api.192.168.3.254.nip.io:30000"]
+    allow_origins = ["https://www.thorne.net.nz", "https://thorne.net.nz", "http://api.192.168.3.254.nip.io:30000"]
     allow_methods = ["GET", "POST",]
     allow_credentials = true
     allow_headers = ["authorization", "content-type"]
@@ -95,7 +95,7 @@ resource "aws_apigatewayv2_route" "api_route_listing" {
 resource "aws_apigatewayv2_integration" "api_integration_graphql" {
   api_id           = aws_apigatewayv2_api.api.id
   integration_type = "HTTP_PROXY"
-  integration_uri  = "https://api.thorney.me/v1/graphql"
+  integration_uri  = "https://api.thorne.net.nz/v1/graphql"
   integration_method = "POST"
 }
 

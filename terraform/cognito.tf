@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool_domain" "cognito_domain" {
-  domain          = "auth.thorney.me"
+  domain          = "auth.thorne.net.nz"
   certificate_arn = aws_acm_certificate.cert.arn
   user_pool_id    = aws_cognito_user_pool.cognito_pool.id
 }
@@ -15,8 +15,8 @@ resource "aws_cognito_user_pool" "cognito_pool" {
 resource "aws_cognito_user_pool_client" "client" {
   name                 = "homes-client"
   user_pool_id         = aws_cognito_user_pool.cognito_pool.id
-  callback_urls        = ["http://localhost:3000/callback", "https://www.thorney.me/callback"]
-  default_redirect_uri = "https://www.thorney.me/callback"
+  callback_urls        = ["http://localhost:3000/callback", "https://www.thorne.net.nz/callback"]
+  default_redirect_uri = "https://www.thorne.net.nz/callback"
 
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code"]

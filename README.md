@@ -1,7 +1,7 @@
 
 # Home Website on RaspberryPi Kubernetes Cluster 
 
-My overkill website at https://thorney.me hosted on a RaspberryPi at home. It is created with:
+My overkill website at https://thorne.net.nz hosted on a RaspberryPi at home. It is created with:
 - Deployment on Kubernetes with K3s
 - Monitoring from New Relic 
 - CICD pipeline using GitHub Actions

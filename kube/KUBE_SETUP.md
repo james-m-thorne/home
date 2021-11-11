@@ -52,7 +52,7 @@ kubectl taint node fedora node-role.kubernetes.io/master-
 ```
 
 ```bash
-# Add api.thorney.me to kube certificate
+# Add api.thorne.net.nz to kube certificate
 # https://blog.scottlowe.org/2019/07/30/adding-a-name-to-kubernetes-api-server-certificate/
 
 kubectl -n kube-system get configmap kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' > kubeadm.yaml
@@ -83,7 +83,7 @@ helm install  \
   --set aws.secretKey=XX \
   --set aws.region=us-east-1 \
   --set policy=upsert-only \
-  --set domainFilters={api.thorney.me}
+  --set domainFilters={api.thorne.net.nz}
 
 # Install NGINX ingress controller
 helm install \

@@ -1,7 +1,7 @@
 
 locals {
   public_ip = "202.56.44.248"
-  site = "thorney.me"
+  site = "thorne.net.nz"
   origin_id = "home-website"
 }
 

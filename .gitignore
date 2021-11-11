@@ -29,5 +29,6 @@ terraform/crash.log
 terraform/builds/
 terraform/*.tfstate
 terraform/secrets.auto.tfvars
+terraform/.terraform.lock.hcl
 package/
 /kube/metadata/config

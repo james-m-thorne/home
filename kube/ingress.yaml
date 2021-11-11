@@ -13,10 +13,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - api.thorney.me
+    - api.thorne.net.nz
     secretName: app-web-cert
   rules:
-  - host: api.thorney.me
+  - host: api.thorne.net.nz
     http:
       paths:
       - path: /
