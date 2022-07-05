@@ -90,3 +90,9 @@ helm install \
   ingress-nginx ingress-nginx/ingress-nginx \
   -f nginx-values.yaml
 ```
+
+```bash
+# Resize the fedora node
+https://gist.github.com/181192/cf7eb42a25538ccdb8d0bb7dd57cf236
+lvresize -L +5G --resizefs /dev/mapper/fedora_fedora-root
+```

@@ -1,0 +1,9 @@
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: dynamic-local-storage
+  resources:
+    requests:
+      storage: 1Gi
+
+replicas: 1
+minimumMasterNodes: 1

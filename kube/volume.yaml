@@ -1,9 +1,15 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: postgres-storageclass
-  labels:
-    app: postgres
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: dynamic-local-storage
 provisioner: rancher.io/local-path
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
@@ -15,9 +21,9 @@ metadata:
   labels:
     app: postgres
 spec:
-  storageClassName: postgres-storageclass
+  storageClassName: local-storage
   capacity:
-    storage: 10Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -31,7 +37,7 @@ metadata:
     app: postgres
 spec:
   volumeName: postgres-pv
-  storageClassName: postgres-storageclass
+  storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   resources:
