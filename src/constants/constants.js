@@ -1,5 +1,5 @@
 
-export const API_URL = 'https://gateway.thorne.net.nz'
+export const API_URL = 'https://gateway.thorne.nz'
 
 export const PEOPLE = [
   {

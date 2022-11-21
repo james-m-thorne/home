@@ -4,7 +4,7 @@ exports.handler = (event, context, callback) => {
   const userId = event.request.userAttributes.sub
   const email = event.userName
   const hasuraAdminSecret = process.env.HASURA_ADMIN_SECRET
-  const url = 'https://api.thorne.net.nz/v1/graphql'
+  const url = 'https://api.thorne.nz/v1/graphql'
   const upsertUserQuery = `
     mutation($userId: uuid, $email: String!) {
       insert_users(objects: {user_id: $userId, email: $email}, on_conflict: {constraint: users_email_key, update_columns: []}) {

@@ -52,7 +52,7 @@ kubectl taint node fedora node-role.kubernetes.io/master-
 ```
 
 ```bash
-# Add api.thorne.net.nz to kube certificate
+# Add api.thorne.nz to kube certificate
 # https://blog.scottlowe.org/2019/07/30/adding-a-name-to-kubernetes-api-server-certificate/
 
 kubectl -n kube-system get configmap kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' > kubeadm.yaml
@@ -62,6 +62,18 @@ kubeadm init phase certs apiserver --config kubeadm.yaml
 
 # Restart kube api server
 docker kill $(docker ps | grep kube-apiserver | grep -v pause)
+```
+
+# Renew certs
+```
+# https://stackoverflow.com/questions/49885636/kubernetes-expired-certificate
+kubeadm certs renew all
+systemctl restart kubelet
+cp /root/.kube/config /root/.kube/.old-$(date --iso)-config
+cp /etc/kubernetes/admin.conf /root/.kube/config
+
+# May need to copy kubelet.conf data 
+# https://serverfault.com/questions/1032367/kubectl-get-nodes-error-you-must-be-logged-in-to-the-server-unauthorized-ho
 ```
 
 ## Helm installations
@@ -83,7 +95,7 @@ helm upgrade --install  \
   --set aws.secretKey=XX \
   --set aws.region=us-east-1 \
   --set policy=upsert-only \
-  --set domainFilters={api.thorne.net.nz}
+  --set domainFilters={api.thorne.nz}
 
 # Install NGINX ingress controller
 helm install \

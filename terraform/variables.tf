@@ -13,3 +13,9 @@ variable "aws_secret_access_key_id" {
   description = "AWS secret access key id for dns-challenge user"
   type        = string
 }
+
+variable "domain" {
+  description = "Domain name"
+  type        = string
+  default     = "thorne.nz"
+}

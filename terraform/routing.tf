@@ -1,13 +1,12 @@
 
 locals {
   public_ip = "202.56.44.248"
-  site = "thorne.net.nz"
   origin_id = "home-website"
 }
 
 // Be sure to change nameservers
 resource "aws_route53_zone" "zone" {
-  name = local.site
+  name = var.domain
 }
 
 resource "aws_route53_record" "gateway" {
@@ -23,7 +22,7 @@ resource "aws_route53_record" "gateway" {
 }
 
 resource "aws_apigatewayv2_domain_name" "api_domain" {
-  domain_name = "gateway.${local.site}"
+  domain_name = "gateway.${var.domain}"
 
   domain_name_configuration {
     certificate_arn = aws_acm_certificate.cert.arn
@@ -33,8 +32,8 @@ resource "aws_apigatewayv2_domain_name" "api_domain" {
 }
 
 resource "aws_route53_record" "cloudfront_domain" {
-  name = local.site
-  type = "A"
+  name    = var.domain
+  type    = "A"
   zone_id = aws_route53_zone.zone.zone_id
 
   alias {
@@ -45,8 +44,8 @@ resource "aws_route53_record" "cloudfront_domain" {
 }
 
 resource "aws_route53_record" "www" {
-  name = "www.${local.site}"
-  type = "A"
+  name    = "www.${var.domain}"
+  type    = "A"
   zone_id = aws_route53_zone.zone.zone_id
 
   alias {
@@ -58,7 +57,7 @@ resource "aws_route53_record" "www" {
 
 resource "aws_route53_record" "api" {
   zone_id = aws_route53_zone.zone.zone_id
-  name    = "api.${local.site}"
+  name    = "api.${var.domain}"
   type    = "A"
   ttl     = "300"
   records = [local.public_ip]
@@ -85,18 +84,18 @@ resource "aws_cloudfront_distribution" "home_distribution" {
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
-    domain_name = "api.${local.site}"
-    origin_id = local.origin_id
+    domain_name = "api.${var.domain}"
+    origin_id   = local.origin_id
   }
 
   custom_error_response {
-    error_code = 404
-    response_page_path = "/index.html"
-    response_code = 200
+    error_code            = 404
+    response_page_path    = "/index.html"
+    response_code         = 200
     error_caching_min_ttl = 0
   }
 
-  aliases = [local.site, "www.${local.site}"]
+  aliases = [var.domain, "www.${var.domain}"]
 
   enabled             = true
   default_root_object = "index.html"
@@ -128,15 +127,15 @@ resource "aws_cloudfront_distribution" "home_distribution" {
 
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.cert.arn
-    ssl_support_method = "sni-only"
+    ssl_support_method  = "sni-only"
   }
 }
 
 // Create the cert
 resource "aws_acm_certificate" "cert" {
-  domain_name       = local.site
-  subject_alternative_names = ["*.${local.site}"]
-  validation_method = "DNS"
+  domain_name               = var.domain
+  subject_alternative_names = ["*.${var.domain}"]
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true
@@ -145,11 +144,11 @@ resource "aws_acm_certificate" "cert" {
 
 # This is a DNS record for the ACM certificate validation to prove we own the domain
 resource "aws_route53_record" "cert_record" {
-  name     = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
-  type     = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
-  zone_id  = aws_route53_zone.zone.id
-  records  = [tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value]
-  ttl      = 60
+  name    = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
+  type    = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
+  zone_id = aws_route53_zone.zone.id
+  records = [tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value]
+  ttl     = 60
 }
 
 # This tells terraform to cause the route53 validation to happen
