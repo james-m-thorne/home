@@ -1,12 +1,13 @@
 
-# Home Website on RaspberryPi Kubernetes Cluster 
+# Home Website on a Linux Kubernetes Cluster 
 
-My overkill website at https://thorne.nz hosted on a RaspberryPi at home. It is created with:
-- Deployment on Kubernetes with K3s
-- Monitoring from New Relic 
+My overkill website at https://thorne.nz hosted on a Fedora Linux server at home. It is created with:
+- Deployment on Kubernetes with kubeadm. Including all cluster networking
+- Postgres Database with a Hasura GraphQL API 
+- Monitoring using New Relic Synthetics and Browser
 - CICD pipeline using GitHub Actions
 - React SPA frontend
-- Terraform to create Route53, ACM, and Cloudfront resources
+- Terraform to create Route53, API Gateway, Lambda, IAM, Cognito, ACM, and Cloudfront resources
 
 ## Monitoring 
 A New Relic dashboard has been set up to monitor the performance of my SPA using:
